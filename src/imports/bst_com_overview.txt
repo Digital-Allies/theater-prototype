@@ -1,0 +1,2274 @@
+Tab 1
+Structure Overview
+To make this "one full page widget," you should structure your HTML so that each of the 5 sections is a repeatable group. In the Duda Widget Builder "Content" tab, you should create a List of sections, where each section has:
+* Heading Text (Title)
+* Layout Type (Dropdown: 1, 2, 3, or 4 columns)
+* Items List (The cards inside that specific grid)
+________________
+
+
+1. The HTML 
+This structure uses CSS Variables (like --columns) that you can map to your Duda Widget "Design" inputs so the user can change column counts on the fly.
+HTML
+<div class="bst-page-widget">
+
+
+  <section class="bst-section">
+    <div class="bst-header-box">
+      <h2 class="bst-heading">[[Section Title]]</h2>
+    </div>
+
+
+    <div class="bst-grid" style="--col-count: [[Column Option]];">
+      
+      <div class="bst-card">
+        <span class="bst-badge">[[Badge Text]]</span>
+        <div class="bst-card-content">
+          <h3>[[Card Title]]</h3>
+          <p>[[Card Description]]</p>
+        </div>
+        <button class="bst-button">[[Button Label]]</button>
+      </div>
+
+
+    </div>
+  </section>
+
+
+</div>
+
+
+________________
+
+
+2. The CSS (Borders, Shadows, and Spacing)
+This CSS implements your 2pt thickness, asymmetric rounding, and 0-bleed right shadow.
+CSS
+:root {
+  --bst-teal: #00A3A3; /* Default accent */
+  --bst-border-weight: 2px;
+  --bst-radius: 10pt;
+}
+
+
+/* Section Spacing */
+.bst-section {
+  padding: 80px 0;
+  margin-bottom: 2rem;
+}
+
+
+/* Full Square Section Headers */
+.bst-header-box {
+  border: var(--bst-border-weight) solid currentColor;
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  margin-bottom: 3rem;
+  text-transform: uppercase;
+}
+
+
+/* Responsive Grid Logic */
+.bst-grid {
+  display: grid;
+  /* Uses the variable from the HTML or defaults to 3 columns */
+  grid-template-columns: repeat(var(--col-count, 3), 1fr);
+  gap: 2.5rem;
+}
+
+
+/* Card Style: Asymmetric Borders & Right-Focus Shadow */
+.bst-card {
+  position: relative;
+  border: var(--bst-border-weight) solid currentColor;
+  /* Upper and Lower Right rounding only */
+  border-radius: 0 var(--bst-radius) var(--bst-radius) 0;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+  
+  /* 0-bleed (0 blur) shadow focused on the right (8px offset) */
+  box-shadow: 8px 0 0 0 rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease;
+}
+
+
+.bst-card:hover {
+  transform: translateX(4px); /* Slight nudge to emphasize the shadow */
+}
+
+
+/* Badge Style */
+.bst-badge {
+  align-self: flex-start;
+  font-size: 0.7rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border: 1px solid currentColor;
+  padding: 4px 12px;
+  margin-bottom: 1.5rem;
+  /* Matches card rounding logic but smaller */
+  border-radius: 0 5pt 5pt 0;
+}
+
+
+/* Button Style */
+.bst-button {
+  margin-top: auto;
+  background: var(--bst-teal);
+  color: #000;
+  border: none;
+  padding: 12px 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  /* Standard square or match the 10pt right-round */
+  border-radius: 0 5pt 5pt 0;
+}
+
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .bst-grid {
+    grid-template-columns: 1fr !important; /* Force single column on mobile */
+  }
+}
+
+
+3. Implementation Checklist for Duda Widget Builder
+1. Variables: Map the --col-count to a "Number" or "Dropdown" input in your widget settings so you can switch between 1–4 columns per section.
+2. Color Sync: Use currentColor in the CSS for borders/badges so they automatically match the "Font Color" setting of the site.
+3. The "5 Grids" Requirement: Use a "List" content type for the sections. This allows the user to add exactly 5 sections (or more/less) as needed to build the full page.
+_____________________________________________________________________________________________________
+
+
+1. Global Styles & Design Tokens (The DNA)
+
+
+Background (Stage Black): #111315. Use as the primary fill for all section backgrounds and cards.
+
+
+Primary Accent (Neon Teal): #14b8a6. Use for borders, active states, and icons.
+
+
+Secondary Slate: #1b1f22. Use for subtle structural elements or secondary button states.
+
+
+Typography:
+
+
+Headings: 'League Spartan' (Bold). All-caps, tracking +5% to +10%.
+
+
+Body: 'Roboto' (Regular/Semi-Bold).
+
+
+2. Geometry & Effects (The "BST Curve" Logic)
+
+
+The BST Curve (Asymmetrical Rounding): * Left side: 0px radius (Strictly Flat).
+
+
+Right side: 10px radius (Rounded).
+
+
+Logic: This applies to all "Spec Cards," Show Cards, and Section Overlays.
+
+
+Right-Side Shadow (Marquee Depth):
+
+
+Effect: Drop Shadow.
+
+
+Settings: X: 12, Y: 0, Blur: 20, Spread: -8.
+
+
+Color: #14b8a6 (40% opacity).
+
+
+Requirement: Shadow must have NO bleed on the left-hand side. It should appear to glow purely from the right edge.
+
+
+Header Border Glow:
+
+
+Section Headers must have a 4px vertical border on the Right side only.
+
+
+Apply a 10px blur glow to this border ONLY (Color: #14b8a6).
+
+
+Restriction: NO text glowing. NO section-wide glowing.
+
+
+3. Component Specifications
+
+
+Section Headers:
+
+
+Structure - 
+
+
+       Section
+
+
+           Flex Grid
+
+
+Full 4 point border on both the section borders with no corner rounding 
+
+
+Apply a 10px blur glow to both borders (Color: #14b8a6).
+
+
+Left-aligned H2 (League Spartan).
+
+
+
+
+
+
+Show Cards (1294x2000 Standard):
+
+
+Aspect Ratio: 2:3.
+
+
+Container: BST Curve (0/10/10/0).
+
+
+Border: 2px solid #14b8a6 on Top, Right, and Bottom. NO border on the Left.
+
+
+Shadow: Right-side offset glow only.
+
+
+Buttons:
+
+
+Fill: #14b8a6.
+
+
+Text: #111315 (Bold Noto Sans).
+
+
+Shape: Standard Rectangle (0px radius) or matching the BST Curve for larger CTA blocks.
+
+
+4. Information Architecture & Layout
+
+
+Desktop Grid: 12-column grid.
+
+
+Sectioning:
+
+
+Strategy Section: Dashboard-style layout with data visualizations (solid teal bars, no gradients).
+
+
+Visual Spec Section: High-contrast "Stage Black" cards demonstrating the asymmetrical curve.
+
+
+Backend Section: Clean, structured tables showing Collection mapping (Fields: Title, Ludus ID, Date, Category).
+
+
+AEO/SEO Hierarchy: Ensure every page layout features a single H1 (League Spartan) and logical H2-H3 nesting for AI Engine Optimization.
+
+
+5. Final Visual Check
+
+
+Does it look like a modern "Neon Marquee"?
+
+
+Is the left side of every card perfectly flat and aligned to the grid?
+
+
+Is the shadow ONLY visible on the right?
+
+
+Are all gradients and text-glows removed?
+I need help layout out the rest of the website. Home
+
+
+
+
+
+
+Page: Home
+Major sections: 
+* Now Playing with show grid and filter for the next 2 weeks only
+* Google reviews
+* Support Fundraiser grid - all categories small card layout without too much text
+* Blog preview 
+* FAQ
+
+
+Page: Get Tickets
+* Major Section: Shows in category sections
+* Concert Series 
+* Youth Theater
+* Community Theater
+* Special Events
+FAQ
+
+
+Youth Theater
+Major Sections:
+* Youth Productions
+* Youth Auditions 
+
+
+Community Theater
+Major Sections:
+* Volunteer Opportunities
+* Auditions
+* Classes
+Support
+Major Sections:
+* Sponsor a Show
+* Help Fund Our Equipment 
+* Adopt a Seat
+* Pay-It-Forward Programs
+
+
+Page: About
+* Beale Street Theater - document attached with 100 year history
+* Executive Staff - spreadsheet attached 
+
+
+Page: Contact
+Major Sections: 
+* Plan Your Visit - couple of written sections about the community then a prebuilt widget 
+
+
+________________
+
+
+Page Content Requirements:
+HOME PAGE: DONE
+* Hero section: Large theater stage image with overlay text "WELCOME TO BEALE STREET THEATER" and "Get Tickets" button with BST Curve
+* Current Shows section: Display 3-4 show cards in a grid
+   * Each card: 2:3 aspect ratio (vertical)
+   * Show poster image placeholder
+   * Show title, dates, and "Buy Tickets" button
+   * All cards use BST Curve border radius
+* Upcoming Events calendar widget (month view preferred)
+* Call-to-action section for subscriptions/memberships
+GET TICKETS - SHOWS PAGE:
+* Grid of all current and upcoming shows (12 shows total)
+* Filter by date/category
+* Show cards with:
+   * Show title
+   * Performance dates
+   * Venue location
+   * Price range
+   * "Buy Tickets" button linking to external ticketing (Ludus)
+Shows to include:
+SEE SHOW COLLECTION SECTION
+ABOUT - BEALE STREET THEATER:
+Theater history and mission statement
+
+
+Mission Statement: 
+The KCA  mission is to establish and enrich the culture and community of Kingman, AZ, through Art-related education, performances and venues. While KCA values the freedom of artistic expression, its main focus will be the promotion of art that would be appropriate and uplifting for most audiences of any age, gender, race, culture or religion.
+
+
+Core Values: 
+Community: Connecting people through the arts, and in doing so, creating a shared community and culture.
+Creativity: Providing the opportunity to express ideas and experiences in an open and safe environment.
+Excellence: Exceeding expectations in the quality of our productions and the effective stewardship of
+our resources.
+Personal Growth: Providing all participants with the opportunity to develop their artistic skills through experience and education.
+Inclusivity: Striving to provide an atmosphere that is safe and welcoming to all those who wish to participate.
+
+
+For History see BST History section
+* Photo gallery of the venue
+* Venue specifications (seating capacity, accessibility info)
+* community impact
+* Card style grid with support program summaries and links to those pages
+ABOUT - EXECUTIVE STAFF:
+* Grid of staff member cards with:
+   * Photo placeholder
+   * Name and title
+   * Brief bio
+   * Contact email (optional)
+YOUTH THEATER - YOUTH PRODUCTIONS:
+* Overview of youth theater program
+* Upcoming youth shows
+* Age groups and program details
+* Registration information
+YOUTH THEATER - YOUTH AUDITIONS:
+* Current audition opportunities
+* Audition preparation tips
+* Schedule and registration
+* Requirements and expectations
+SUPPORT
+* Current volunteer needs
+* Sign-up form
+* Volunteer testimonials
+* Volunteer program description
+SUPPORT - SPONSOR A SHOW:
+* Sponsorship tiers and benefits
+* Current sponsorship opportunities
+* Recognition details
+* Contact for corporate sponsorships
+SUPPORT - HELP FUND OUR EQUIPMENT:
+* Equipment funding campaign
+* Donation tiers
+* Impact stories
+* Donation form/button
+SUPPORT - ADOPT A SEAT:
+* Seat adoption program explanation
+* Pricing and plaque details
+* Interactive seat map (if possible)
+* Donation form
+SUPPORT - PAY-IT-FORWARD PROGRAMS:
+* Program description for ticket donations
+* Impact statistics
+* Donation options
+* Beneficiary stories
+CONTACT - PLAN YOUR VISIT:
+* Address: [Theater address]
+* Phone: [Theater phone]
+* Email: [Theater email]
+* Hours of operation
+* Parking information
+* Accessibility information
+* FAQ section
+* Contact form
+________________
+
+
+Component Specifications:
+Buttons:
+* Background: #14b8a6 (teal)
+* Text: white, uppercase, League Spartan bold
+* Border radius: BST Curve (0px 10px 10px 0px)
+* Shadow: 4px 4px 12px rgba(20, 184, 166, 0.3)
+* Hover: Brighten slightly, increase shadow
+Section Headers:
+* Text: League Spartan, bold, ALL CAPS, large size
+* Bottom border: 4px solid #14b8a6
+* Margin bottom: 2rem
+Cards (Show cards, staff cards, etc):
+* Background: Slightly lighter than #111315 (use #1a1d1f)
+* Border radius: BST Curve
+* Shadow: 6px 6px 20px rgba(20, 184, 166, 0.2)
+* Padding: 1.5rem
+________________
+
+
+Functionality Requirements:
+1. Responsive design (mobile, tablet, desktop)
+2. Event calendar with month navigation
+3. Contact forms on relevant pages
+4. External links to Ludus ticketing system for show purchases
+5. Image galleries where appropriate
+6. Smooth scrolling and transitions
+7. Accessible design (WCAG compliant)
+________________
+________________
+
+
+________________
+
+
+Navigation: Home | Get Tickets (Shows, See What's on Stage) | About (Beale Street Theater, Executive Staff) | Contact (Plan Your Visit) | Youth Theater (Youth Productions, Youth Auditions) | Support (Volunteer Opportunities, Sponsor a Show, Fund Equipment, Adopt a Seat, Pay-It-Forward) | More (Auditions, Classes)
+________________
+
+
+Pages:
+HOME: Hero with "WELCOME TO BEALE STREET THEATER" + CTA button. Grid of 3-4 show cards (2:3 ratio, BST Curve, poster/title/dates/button). Calendar widget. Membership CTA.
+SHOWS: Grid of 12 shows: Lion King JR (Feb 15), Frozen JR (Feb 22), Annie (Mar 1), Little Mermaid (Mar 8), Into the Woods (Mar 15), Hamilton (Mar 22), Dear Evan Hansen (Mar 29), Hadestown (Apr 5), Spring Awakening (Apr 12), Matilda (Apr 19), Wicked (Apr 26), Les Mis (May 3, 2026). Each card: title, dates, venue, price, "Buy Tickets" button.
+SEE WHAT'S ON STAGE: Monthly calendar, color-coded categories, clickable events with ticket links.
+BEALE STREET THEATER: History, mission, venue gallery, seating/accessibility info, community impact.
+EXECUTIVE STAFF: Grid of staff cards with photos, names, titles, bios.
+PLAN YOUR VISIT: Address, phone, email, hours, parking, accessibility, FAQ, contact form.
+YOUTH PRODUCTIONS: Program overview, upcoming shows, age groups, registration.
+YOUTH AUDITIONS: Opportunities, prep tips, schedule, requirements.
+VOLUNTEER: Program description, needs, signup form, testimonials.
+SPONSOR A SHOW: Tiers, benefits, opportunities, corporate contact.
+FUND EQUIPMENT: Campaign info, donation tiers, impact stories, donation button.
+ADOPT A SEAT: Program explanation, pricing, plaques, seat map, donation form.
+PAY-IT-FORWARD: Ticket donation program, impact stats, donation options, stories.
+AUDITIONS: Current notices, calendar, preparation, requirements.
+CLASSES: Acting/singing/dance/tech classes, schedule, pricing, instructors, registration.
+________________
+
+
+Components:
+* Buttons: #14b8a6 bg, white uppercase text, BST Curve, teal glow shadow
+* Cards: #1a1d1f bg, BST Curve, teal shadow, 1.5rem padding
+* Headers: League Spartan bold caps, 4px teal bottom border
+* Nav: #111315 bg, teal active highlight, dropdown menus
+* Footer: 3 columns (links, contact, social), teal accents
+Requirements: Responsive design, event calendar with navigation, contact forms, external Ludus ticketing links, image galleries, smooth transitions, WCAG accessible.
+________________
+
+
+
+
+
+
+
+
+Beale Street Theater (2026 Season)
+Role: Expert UI/UX Designer / Design Systems Architect
+Objective: Create a High-Fidelity Component Library and Page Layouts for the Beale Street Theater (BST) website launch.
+1. Global Styles & Design Tokens (The DNA)
+* Background (Stage Black): #111315. Use as the primary fill for all section backgrounds and cards.
+* Primary Accent (Neon Teal): #14b8a6. Use for borders, active states, and icons.
+* Secondary Slate: #1b1f22. Use for subtle structural elements or secondary button states.
+* Typography:
+   * Headings: 'League Spartan' (Bold). All-caps, tracking +5% to +10%.
+   * Body: 'Roboto' (Regular/Semi-Bold).
+* Gradients: ABSOLUTELY PROHIBITED. All fills must be flat hex values.
+2. Geometry & Effects (The "BST Curve" Logic)
+* The BST Curve (Asymmetrical Rounding): * Left side: 0px radius (Strictly Flat).
+   * Right side: 10px radius (Rounded).
+   * Logic: This applies to all "Spec Cards," Show Cards, and Section Overlays.
+* Right-Side Shadow (Marquee Depth):
+   * Effect: Drop Shadow.
+   * Settings: X: 12, Y: 0, Blur: 20, Spread: -8.
+   * Color: #14b8a6 (40% opacity).
+   * Requirement: Shadow must have NO bleed on the left-hand side. It should appear to glow purely from the right edge.
+* Header Border Glow:
+   * Section Headers must have a 4px vertical border on the Right side only.
+   * Apply a 10px blur glow to this border ONLY (Color: #14b8a6).
+   * Restriction: NO text glowing. NO section-wide glowing.
+3. Component Specifications
+* Section Headers:
+   * Structure -
+       Section
+           Flex Grid
+   * Full 4 point border on both the section borders with no corner rounding 
+   * Apply a 10px blur glow to both borders (Color: #14b8a6).
+   * Left-aligned H2 (League Spartan).
+   * Show Cards (1294x2000 Standard):
+   * Aspect Ratio: 2:3.
+   * Container: BST Curve (0/10/10/0).
+   * Border: 2px solid #14b8a6 on Top, Right, and Bottom. NO border on the Left.
+   * Shadow: Right-side offset glow only.
+   * Buttons:
+   * Fill: #14b8a6.
+   * Text: #111315 (Bold Noto Sans).
+   * Shape: Standard Rectangle (0px radius) or matching the BST Curve for larger CTA blocks.
+4. Information Architecture & Layout
+   * Desktop Grid: 12-column grid.
+   * Sectioning:
+   * Strategy Section: Dashboard-style layout with data visualizations (solid teal bars, no gradients).
+   * Visual Spec Section: High-contrast "Stage Black" cards demonstrating the asymmetrical curve.
+   * Backend Section: Clean, structured tables showing Collection mapping (Fields: Title, Ludus ID, Date, Category).
+   * AEO/SEO Hierarchy: Ensure every page layout features a single H1 (League Spartan) and logical H2-H3 nesting for AI Engine Optimization.
+5. Final Visual Check
+   * Does it look like a modern "Neon Marquee"?
+   * Is the left side of every card perfectly flat and aligned to the grid?
+   * Is the shadow ONLY visible on the right?
+   * Are all gradients and text-glows removed?
+
+
+
+
+Beale Street History
+The Evolution of Beale Street Theater: A Journey Through Time
+1. Introduction: A Century of Storytelling in Kingman
+Welcome to the Beale Street Theater. As you step across this threshold, whether as a student of the arts or a dedicated volunteer, you are not merely entering a building—you are becoming a steward of Kingman’s architectural heritage. For over a century, this site has functioned as the cultural heart of our community, evolving through various forms to meet the changing needs of its citizens. Our mission today is an act of historic preservation as much as it is an artistic endeavor; we are revitalizing a landmark to ensure that the narrative of Kingman continues to be told on this stage."The goal is to renovate and turn the building into a performing arts venue in order to bring art back into the city!"By participating in our programs, you help bridge the gap between our storied past and a vibrant future. To truly appreciate the weight of the legacy you now carry, we must journey back to the very first iteration of theater in our desert city.
+2. The Four Iterations: Architectural Foundations
+The theatrical landscape in Kingman was not always fixed to one corner. Throughout the 20th century, the community’s passion for cinema and performance manifested in four distinct architectural phases, reflecting the town's growth and its deepening commitment to the arts:
+   * First Iteration: Elks Lodge / Harvey Lang. The earliest home for local gatherings, built by Harvey Lang.
+   * Second Iteration: Andy Devine Ave / Harvey Lang. Known as the Lang Theater.
+   * Third Iteration: Corner of 4th and Beale. A strategic move toward the central downtown corridor.
+   * Fourth Iteration: Corner of 3rd and Beale. Originally the State Theater; the current site of Beale Street Theater.
+Why it Matters: The "So What?"
+The progression of these buildings from small, multi-purpose lodge rooms to a dedicated, prominent structure at the corner of 3rd and Beale mirrors the economic and social revitalization of Kingman’s downtown. This move represents a shift from the arts being a nomadic community hobby to becoming a foundational pillar of our city’s identity. The establishment of the State Theater at this specific intersection anchored the cultural life of Kingman, providing a permanent home for collective imagination.While the physical building eventually found its permanent anchor, its identity would endure a series of dramatic transformations over the following decades.
+
+
+3. A Theater of Many Faces (1979–2017)
+Following the decline of the traditional movie house era, the building entered a long period of adaptive reuse. These transitional chapters were vital to the building's survival; by serving varied community needs, the "soul" of the structure was preserved even when its original purpose was dormant.
+   * The Movie Era Ends (1979):  After decades of serving as a cinema, the theater played its final film and shuttered its doors, marking the end of its first life as a movie palace.
+   * The Spiritual Chapter (1990s):  The building was granted a second life as  Praise Chapel , serving as a house of worship and maintaining its status as a place of community gathering.
+   * The Commercial Chapter:  The space later transitioned into  Boston Antiques , a thrift store that utilized the vast theater floor for local commerce, keeping the roof intact and the doors open.
+   * The Rebirth (2017):  The modern era began when Nate and Sara Peterson purchased the building, reclaiming its cultural heritage by officially naming it the  Beale Street Theater .These diverse uses acted as essential "holding patterns," preventing the structure from falling into the decay that often claims historic theaters. They kept the building standing until a larger community vision for a performing arts renaissance could take hold.
+4. The Renaissance: The 2018–2025 Renovation Project
+In 2018, the Kingman Center for the Arts (KCA) acquired the property, initiating a systematic restoration project to transform the historic shell into a world-class performing arts venue.
+   1. 2018 Acquisition:  KCA purchased the theater and immediately partnered with  Axiom Construction  to begin the rigorous process of demolition and site preparation.
+   2. 2019 Design & Funding:  The project reached a major milestone when  Angle Homes  provided its first matching grant. This funding enabled a collaboration with architect  Michael Taylor  and  Stage Inc  to design a state-of-the-art venue within the historic frame.
+   3. 2022 Major Construction:  Under the leadership of  T.R. Orr Construction , the project entered its most intensive phase. This involved the installation of modern HVAC and electrical systems, professional theater lighting, and the final placement of the house seating.
+   4. 2025 The Grand Reopening:  After seven years of focused effort, the Beale Street Theater opened its brand-new doors, fully realized as a cornerstone for the performing arts.
+Community Partner Spotlight
+   * Axiom Construction:  Provided the critical initial labor for demolition and structural preparation.
+   * Angle Homes (Travis Pennington):  Contributed vital matching grants in 2019 and provided essential construction leadership during the 2022 phase.
+   * Michael Taylor:  The lead architect who envisioned the modern venue while respecting its historic roots.
+   * Stage Inc:  Offered specialized consultation for the complex stage and theater systems.
+   * T.R. Orr Construction (Toby Orr):  Directed the final construction, system integration, and aesthetic finishing of the venue.The physical restoration was a monumental triumph, but the theater truly comes alive through the diverse programs and educational outreach that now fill its halls.
+5. The Modern Legacy: Community, Education, and Access
+Today, the theater operates under the banner  "Historic Stage, Vibrant Community."  It is no longer just a building but a thriving ecosystem that includes the KCA Gallery (led by Director Inessa J. Burnell) and a specialized Gift Shop (coordinated by Teri Merrill).
+Performances & Artistry
+The theater serves as a premiere stage for both local and international talent:
+   * Community & Youth Theater:  Features robust productions such as  The Importance of Being Earnest  and  The Phantom Tollbooth .
+   * Concert Series:  Brings global culture to Kingman, with artists ranging from the Tuvan throat singers  Alash  and the Canadian trio  Cécilia  to the celebrated baritone  Robert Sims .
+Educational Outreach
+Under the guidance of Education Director Sidney Valdez, the theater serves as a classroom for all ages:
+   * Workshops:  Specific offerings include  "A Peculiar Position: An Adult Acting Workshop"  (focusing on theater history and research) and  "Tap Dance with Lisa"  for all skill levels.
+   * Disney Musicals in Schools:  A flagship program that develops sustainable theater programs within local elementary schools.
+   * SOAR (Student Outreach and Art Renditions):  A vital art-based program focused on opioid education and community wellness.
+Accessible Engagement
+We believe the arts are a right, not a privilege. Our access programs ensure every citizen can participate:
+   * Adopt-a-Seat:  For a $1,000 donation, supporters can place a personalized brass plaque on a seat. Note that these  naming rights are in effect for a 10-year term , allowing a new generation of donors to support the theater each decade.
+   * Pay-It-Forward Program:  Donors can provide tickets to underserved groups. This program currently benefits a wide range of partners, including:
+   * The Kingman Area Food Bank
+   * The Mohave County ARC
+   * Angel Manor
+   * The Whitehead House
+   * The Kathryn Heidenreich Adult Center
+   * RISE Services
+   * ECRC Recovery Services
+   * Local church organizationsAs a new volunteer or student, you are the latest chapter in this century-long timeline. You are the heartbeat of the modern renaissance.
+6. Quick Reference: Key Contacts and Visit Information
+   * Physical Address:  302 E. Beale St, Kingman, AZ 86401
+   * Phone Number:  (928) 228-5817
+   * Official Email:  info@bealestreettheater.com
+   * Executive Director:  Kristina Michelson
+   * Education & Outreach Director:  Sidney Valdez
+   * Marketing Director:  Shelby Crawford
+
+
+
+
+
+
+
+
+
+
+
+
+1979 The Movie Era Ends:  After decades of serving as a cinema, the theater played its final film and shuttered its doors, marking the end of its first life as a movie palace.
+
+
+1990s The Spiritual Chapter:  The building was granted a second life as  Praise Chapel , serving as a house of worship and maintaining its status as a place of community gathering.
+
+
+2000sThe Commercial Chapter:  The space later transitioned into  Boston Antiques , a thrift store that utilized the vast theater floor for local commerce, keeping the roof intact and the doors open.
+
+
+2017 The Rebirth:  The modern era began when Nate and Sara Peterson purchased the building, reclaiming its cultural heritage by officially naming it the  Beale Street Theater .These diverse uses acted as essential "holding patterns," preventing the structure from falling into the decay that often claims historic theaters. They kept the building standing until a larger community vision for a performing arts renaissance could take hold.
+
+
+2018 Acquisition:  KCA purchased the theater and immediately partnered with  Axiom Construction  to begin the rigorous process of demolition and site preparation. 
+
+
+2019 Design & Funding:  The project reached a major milestone when  Angle Homes  provided its first matching grant. This funding enabled a collaboration with architect  Michael Taylor  and  Stage Inc  to design a state-of-the-art venue within the historic frame.
+
+
+2022 Major Construction:  Under the leadership of  T.R. Orr Construction , the project entered its most intensive phase. This involved the installation of modern HVAC and electrical systems, professional theater lighting, and the final placement of the house seating.
+
+
+2025 The Grand Reopening:  After seven years of focused effort, the Beale Street Theater opened its brand-new doors, fully realized as a cornerstone for the performing arts.
+
+
+
+
+Staff
+
+
+kristina-michelson
+	Kristina
+	Michelson
+	Executive Director
+	Kristina is an avid participant and consumer of the arts. She has over 30 years of experience as a pianist, both in performing and teaching. She loves to accompany other artists as well as solo. Kristina has spent the last six years as executive director of Kingman Center for the Arts, overseeing the renovation plans of the historic theater into a performing arts venue and acting as executive producer to over 26 live community theater productions.
+	sidney-valdez
+	Sidney
+	Valdez
+	Education Coordinator
+	Passionate about arts education and youth programs Sidney coordinates workshops and classes for aspiring performers in the Kingman community.
+	inessa-j-burnell
+	Inessa J.
+	Burnell
+	Staff Member
+	Dedicated to supporting the daily operations and creative mission of the Beale Street Theater.
+	carol-campbell
+	Carol
+	Campbell
+	Gallery Coordinator
+	Carol is a talented photographer specializing in creative portraiture using natural light. She spent three summers traveling the United States and Canada in a truck camper and believes that travel is conducive to learning, expression, and creativity. Carol has been involved in the gallery and gift shop since 2018.
+	teri-merrill
+	Teri
+	Merrill
+	Gift Shop Coordinator
+	Teri is a dedicated charter member of KCA and an artist skilled in multiple mediums. It became apparent that art was a passion of hers when, as a child, she would set up an art stand while the neighborhood kids would sell lemonade. Art plays a significant role in Teri's life and she has shared her skills with the gallery since its founding.
+	shelby-crawford
+	Shelby
+	Crawford
+	Marketing & Community Engagement
+	Shelby is passionate about the arts and fostering them within our community! She graduated from the University of California, Davis with a B.A. in History and minors in Art History and Museum Studies. Shelby handles Beale Street Theater's marketing, digital presence, and community outreach.
+	matt-hecht
+	Matt
+	Hecht
+	Chair
+	Matt has been involved in community theater for over 30 years. With a degree in Theater and Computer Science, he joined the Beale Street Theater renovation project from its inception and has been a cornerstone of Kingman’s community theater.
+	christine-fredriksen
+	Christine
+	Fredriksen
+	Director
+	An attorney originally from Vancouver, Christine has 17 years of experience in the non-profit sector. She is a cartoonist and illustrator who previously served as the Board Chair. She currently chairs the Human Resources Committee and focuses on fundraising and policy development.
+	sara-peterson
+	Sara
+	Peterson
+	Director
+	(Biographical details were not fully listed in the provided text, but she is officially listed as a Director on the board.)
+	amy-lawry
+	Amy
+	Lowry
+	Director
+	Born and raised in Columbus, Ohio, Amy has a background in children's theater, choir, and dance instruction. A Kingman resident since 2004, she is a published author and active community volunteer who helps manage the KCA volunteer program and policy enforcement.
+	
+
+Show Collection
+
+
+uuid
+	item
+	ludus_deep_link
+	ludus_show_id
+	title
+	description
+	poster
+	image_alttext
+	price_display
+	schema_price
+	show_date
+	show_time
+	doors_time
+	venue
+	venue_address
+	video_url
+	artist_ig
+	artist_fb
+	category
+	seo_title
+	seo_description
+	schema_markup
+	
+
+	cecilia
+	https://bst.ludus.com/200512726
+	200512726
+	Cecilia
+	Traditional music that causes a wonderful stir and fills to overflowing every venue!
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/bst-bsyt-2026-season-posters-4-bst-cecilia-260316_optimized+%281%29.webp
+	Cecilia
+	$15 - $35 | Students $15
+	15
+	03/17/26
+	7:00:00 PM
+	6:00:00 PM
+	Beale Street Theater
+	302 E Beale Street, Kingman, AZ 86401
+	
+
+	
+
+	
+
+	Concert Series
+	Cecilia Live Concert | Beale Street Theater in Kingman, AZ
+	Experience the traditional music of Cecilia that causes a wonderful stir and fills every venue! Catch them live at the Beale Street Theater on March 17, 2026.
+	{ "@context": "https://schema.org", "@type": "MusicEvent", "name": "Cecilia", "description": "Traditional music that causes a wonderful stir and fills to overflowing every venue!", "startDate": "2026-03-17T19:00:00", "url": "https://bst.ludus.com/200512726", "image": "https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/cecilia-show-poster-2026.png", "location": { "@type": "PerformingArtsTheater", "name": "Beale Street Theater", "address": { "@type": "PostalAddress", "streetAddress": "302 E Beale Street", "addressLocality": "Kingman", "addressRegion": "AZ", "postalCode": "86401" } } }
+	
+
+	alash
+	https://bst.ludus.com/200512725
+	200512725
+	Alash
+	Alash are masters of Tuvan throat singing, a remarkable technique for singing multiple pitches at the same time.
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/bst-bsyt-2026-season-posters-14_optimized.webp
+	Alash
+	$15 - $35 | Students $15
+	15
+	03/18/26
+	7:00:00 PM
+	6:00:00 PM
+	Beale Street Theater
+	302 E Beale Street, Kingman, AZ 86401
+	
+
+	
+
+	
+
+	Concert Series
+	Alash: Tuvan Throat Singing Masters | Beale Street
+	Don't miss Alash, masters of Tuvan throat singing, as they sing multiple pitches at the same time. See them live at Beale Street Theater on March 18, 2026.
+Schema:
+	{ "@context": "https://schema.org", "@type": "MusicEvent", "name": "Alash", "description": "Alash are masters of Tuvan throat singing, a remarkable technique for singing multiple pitches at the same time.", "startDate": "2026-03-18T19:00:00", "url": "https://bst.ludus.com/200512725", "image": "https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/6.png", "location": { "@type": "PerformingArtsTheater", "name": "Beale Street Theater", "address": { "@type": "PostalAddress", "streetAddress": "302 E Beale Street", "addressLocality": "Kingman", "addressRegion": "AZ", "postalCode": "86401" } } }
+	
+
+	catch-a-wave
+	https://bst.ludus.com/200515931
+	200515931
+	Catch A Wave Beach Boys Show
+	The sounds of surf, sun, fun and classic cars set the stage backdrop for the legendary 1960’s Beach Boys stage show.
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/10_optimized+%281%29-3b3934f7.webp
+	Catch A Wave Beach Boys Show
+	$20 - $35
+	20
+	03/20/26
+	7:00:00 PM
+	6:00:00 PM
+	Beale Street Theater
+	302 E Beale Street, Kingman, AZ 86401
+	
+
+	
+
+	
+
+	Concert Series
+	Catch A Wave: 1960s Beach Boys Show | Kingman, AZ
+	Enjoy the sounds of surf, sun, fun and classic cars with the legendary Catch A Wave Beach Boys stage show at Beale Street Theater on March 20, 2026.
+Schema:
+	{ "@context": "https://schema.org", "@type": "MusicEvent", "name": "Catch A Wave Beach Boys Show", "description": "The sounds of surf, sun, fun and classic cars set the stage backdrop for the legendary 1960’s Beach Boys stage show.", "startDate": "2026-03-20T19:00:00", "url": "https://bst.ludus.com/200515931", "image": "https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/bst-beach-boys-show-poster-2026-aa985bd2.png", "location": { "@type": "PerformingArtsTheater", "name": "Beale Street Theater", "address": { "@type": "PostalAddress", "streetAddress": "302 E Beale Street", "addressLocality": "Kingman", "addressRegion": "AZ", "postalCode": "86401" } } }
+	
+
+	paperback-writer
+	https://bst.ludus.com/200515930
+	200515930
+	Paperback Writer – The Beatles Experience
+	Featured at Disneyland, Disney Cruise Lines, 4 major cruise lines, theaters, and casinos worldwide, Paperback Writer -The Beatles Experience from Los Angeles, California
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/9_optimized+%281%29-55739a1c.webp
+	Paperback Writer – The Beatles Experience
+	$20 - $35
+	20
+	03/21/26
+	7:00:00 PM
+	6:00:00 PM
+	Beale Street Theater
+	302 E Beale Street, Kingman, AZ 86401
+	
+
+	
+
+	
+
+	Concert Series
+	Paperback Writer: The Beatles Experience | Beale Street Theater
+	Hear the hits of The Beatles from the Ed Sullivan Show to Let It Be with "spot on" vocal and sound alike ability. March 21, 2026, in Kingman, AZ.
+	{ "@context": "https://schema.org", "@type": "MusicEvent", "name": "Paperback Writer – The Beatles Experience", "description": "Paperback Writer- The Beatles Experience allows you to hear the hits from the Ed Sullivan Show through the colorful Sgt. Pepper's years and on to the roof tops of Let It Be performed with "spot on" vocal, look and sound alike ability.", "startDate": "2026-03-21T19:00:00", "url": "https://bst.ludus.com/200515930", "image": "https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/4.1.png", "location": { "@type": "PerformingArtsTheater", "name": "Beale Street Theater", "address": { "@type": "PostalAddress", "streetAddress": "302 E Beale Street", "addressLocality": "Kingman", "addressRegion": "AZ", "postalCode": "86401" } } }
+	
+
+	spring-youth-band
+	https://bst.ludus.com/200520088
+	200520088
+	Spring Youth Concert Band Perf
+	Join us for our Beale Street Youth Concert Band Spring performances!
+
+
+These young musicians have prepared 5 breathtaking music pieces for you listed below, and additional surprise pieces. Led by student conductor and director Damien Valdez.
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/unnamed_optimized.webp
+	Spring Youth Concert Band Perf
+	$8 - $12
+	12
+	03/21/26
+	1:00:00 PM
+	6:00:00 PM
+	Beale Street Theater
+	302 E Beale Street, Kingman, AZ 86401
+	
+
+	
+
+	
+
+	Youth Theater
+	Spring Youth Concert Band Performance | Beale Street Theater
+	Support local talent at the Spring Youth Concert Band Performance at Beale Street Theater in Kingman, AZ. Get your tickets for our upcoming shows!
+	[ { "@context": "https://schema.org", "@type": "MusicEvent", "name": "Spring Youth Concert Band Perf", "description": "Spring Youth Concert Band Performance", "startDate": "2026-03-21T13:00:00", "url": "https://bst.ludus.com/200520088", "image": "https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/bsyt-youth-concertd-poster-2026.png", "location": { "@type": "Performing Arts Theater", "name": "Beale Street Theater", "address": {
+	
+
+	spring-youth-band
+	https://bst.ludus.com/200520088
+	200520088
+	Spring Youth Concert Band Perf
+	Join us for our Beale Street Youth Concert Band Spring performances!
+
+
+These young musicians have prepared 5 breathtaking music pieces for you listed below, and additional surprise pieces. Led by student conductor and director Damien Valdez.
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/bsyt-spring-concert-2026.png
+	Spring Youth Concert Band Perf
+	$8 - $12
+	12
+	04/25/26
+	7:00:00 PM
+	6:00:00 PM
+	Beale Street Theater
+	302 E Beale Street, Kingman, AZ 86401
+	
+
+	
+
+	
+
+	Youth Theater
+	Spring Youth Concert Band Performance | Beale Street Theater
+	Support local talent at the Spring Youth Concert Band Performance at Beale Street Theater in Kingman, AZ. Get your tickets for our upcoming shows!
+	[ { "@context": "https://schema.org", "@type": "Music Event", "name": "Spring Youth Concert Band Perf", "description": "Spring Youth Concert Band Performance", "startDate": "2026-03-25T19:00:00", "url": "https://bst.ludus.com/200520088", "image": "https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/bsyt-youth-concertd-poster-2026.png", "location": { "@type": "Performing Arts Theater", "name": "Beale Street Theater", "address": {
+	
+
+	10th-anniversary-gala
+	https://bst.ludus.com/200517260
+	200517260
+	Beale Street Theater 10th Anniversary Gala!
+	Join Beale Street Theater as we celebrate 10 years of performances!
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/11_optimized.webp
+	Beale Street Theater 10th Anniversary Gala!
+	$15 - $35
+	15
+	03/27/26
+	7:00:00 PM
+	6:00:00 PM
+	Beale Street Theater
+	302 E Beale Street, Kingman, AZ 86401
+	
+
+	
+
+	
+
+	Special Event
+	10 Year Anniversary Gala | Beale Street Theater
+	Celebrate a decade of magic at the Beale Street Theater 10-Year Anniversary Gala! Enjoy reprisals from past shows on March 27 & 28, 2026 in Kingman.
+	{"@context": "https://schema.org", "@type": "Event", "name": "10 Year Anniversary Gala", "startDate": "2026-03-27T19:00", "location": {"@type": "Place", "name": "Beale Street Theater", "address": "302 E Beale St, Kingman, AZ 86401"}, "description": "A special two-night gala honoring a decade of artistic excellence with a dynamic showcase of favorite moments music and scenes from past productions.", "offers": {"@type": "Offer", "url": "https://bst.ludus.com/200517260", "price": "15.00", "priceCurrency": "USD", "availability": "https://schema.org/InStock"}}
+	
+
+	10th-anniversary-gala
+	https://bst.ludus.com/200517260
+	200517260
+	Beale Street Theater 10th Anniversary Gala!
+	Join Beale Street Theater as we celebrate 10 years of performances!
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/11_optimized.webp
+	Beale Street Theater 10th Anniversary Gala!
+	$15 - $35
+	15
+	03/28/26
+	1:00:00 PM
+	6:00:00 PM
+	Beale Street Theater
+	302 E Beale Street, Kingman, AZ 86401
+	
+
+	
+
+	
+
+	Special Event
+	10 Year Anniversary Gala | Beale Street Theater
+	Celebrate a decade of magic at the Beale Street Theater 10-Year Anniversary Gala! Enjoy reprisals from past shows on March 27 & 28, 2026 in Kingman.
+	{"@context": "https://schema.org", "@type": "Event", "name": "10 Year Anniversary Gala", "startDate": "2026-03-28T13:00", "location": {"@type": "Place", "name": "Beale Street Theater", "address": "302 E Beale St, Kingman, AZ 86401"}, "description": "A special two-night gala honoring a decade of artistic excellence with a dynamic showcase of favorite moments music and scenes from past productions.", "offers": {"@type": "Offer", "url": "https://bst.ludus.com/200517260", "price": "15.00", "priceCurrency": "USD", "availability": "https://schema.org/InStock"}}
+	
+
+	astral-mixtape
+	https://bst.ludus.com/200512727
+	200512727
+	Astral Mixtape
+	Fusing classical virtuosity with electronics to create music that is personal, captivating, and boldly original.
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/8.png
+	Astral Mixtape
+	$15 - $35
+	15
+	04/04/26
+	7:00:00 PM
+	6:00:00 PM
+	Beale Street Theater
+	302 E Beale Street, Kingman, AZ 86401
+	
+
+	
+
+	
+
+	Concert Series
+	Astral Mixtape | Live Chamber Music Kingman AZ
+	Experience the genre-defying sounds of Astral Mixtape live at Beale Street Theater on April 4, 2026. Secure your tickets for this unique Kingman concert!
+	{"@context": "https://schema.org", "@type": "Event", "name": "Astral Mixtape", "startDate": "2026-04-04T19:00", "location": {"@type": "Place", "name": "Beale Street Theater", "address": "302 E Beale St, Kingman, AZ 86401"}, "description": "A bold reimagining of chamber music drawing from the exuberance of pop the improvisational spirit of jazz and the adventurous edge of contemporary music.", "offers": {"@type": "Offer", "url": "https://bst.ludus.com/", "price": "15.00", "priceCurrency": "USD", "availability": "https://schema.org/InStock"}}
+	
+
+	chronicles-highwaymen
+	https://bst.ludus.com/200518662
+	200518662
+	Chronicles of the Highway Men
+	A powerful concert-theatrical experience that brings to life the stories and songs of Johnny Cash, Waylon Jennings, Willie Nelson, and Kris Kristofferson.
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/11_optimized+%281%29.webp
+	Chronicles of the Highway Men
+	$25 - $40
+	25
+	04/10/26
+	7:00:00 PM
+	6:00:00 PM
+	Beale Street Theater
+	302 E Beale Street, Kingman, AZ 86401
+	
+
+	
+
+	
+
+	Concert Series
+	Chronicles of the Highwaymen | Beale Street Theater
+	Catch the Chronicles of the Highwaymen live in Kingman, AZ on April 10, 2026! A powerful tribute to country music's greatest legends. Get tickets now.
+	{"@context": "https://schema.org", "@type": "Event", "name": "Chronicles of the Highwaymen", "startDate": "2026-04-10T19:00", "location": {"@type": "Place", "name": "Beale Street Theater", "address": "302 E Beale St, Kingman, AZ 86401"}, "description": "A powerful concert-theatrical production bringing to life the stories and songs of Johnny Cash, Waylon Jennings, Willie Nelson, and Kris Kristofferson.", "offers": {"@type": "Offer", "url": "https://bst.ludus.com/", "price": "25.00", "priceCurrency": "USD", "availability": "https://schema.org/InStock"}}
+	
+
+	forever-everly
+	https://bst.ludus.com/200513803
+	200513803
+	Forever Everly
+	This duo creates an unforgettable evening through a blend of film and live music, to honor the legacy of The Everly Brothers.
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/bst-forever-everly-show-poster-2026.png
+	Forever Everly
+	$15 - $35
+	15
+	04/11/26
+	4:00:00 PM
+	6:00:00 PM
+	Beale Street Theater
+	302 E Beale Street, Kingman, AZ 86401
+	
+
+	
+
+	
+
+	Concert Series
+	Forever Everly Tribute | Live Concert Kingman AZ
+	Join us for Forever Everly a moving tribute to the Everly Brothers at Beale Street Theater on April 11, 2026. Secure your seats for this classic show!
+	{"@context": "https://schema.org", "@type": "Event", "name": "Forever Everly", "startDate": "2026-04-11T16:00", "location": {"@type": "Place", "name": "Beale Street Theater", "address": "302 E Beale St, Kingman, AZ 86401"}, "description": "A moving and unforgettable live music tribute to one of the most influential duos in music history—The Everly Brothers.", "offers": {"@type": "Offer", "url": "https://bst.ludus.com/", "price": "15.00", "priceCurrency": "USD", "availability": "https://schema.org/InStock"}}
+	
+
+	dreamboats
+	https://bst.ludus.com/200519099
+	200519099
+	The Dreamboats
+	Take a trip back to the golden age of rock 'n' roll with The Dreamboats.
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/bst-dreamboats-show-poster-2026.png
+	The Dreamboats
+	$20 - $35
+	20
+	04/14/26
+	7:00:00 PM
+	6:00:00 PM
+	Beale Street Theater
+	302 E Beale Street, Kingman, AZ 86401
+	
+
+	
+
+	
+
+	Concert Series
+	The Dreamboats | 50s & 60s Rock in Kingman AZ
+	Take a trip back to the golden age of rock 'n' roll with The Dreamboats live at Beale Street Theater on April 14, 2026! Get your tickets today.
+	{"@context": "https://schema.org", "@type": "Event", "name": "The Dreamboats", "startDate": "2026-04-14T19:00", "location": {"@type": "Place", "name": "Beale Street Theater", "address": "302 E Beale St, Kingman, AZ 86401"}, "description": "Get ready to twist shout and rock the night away! A high-energy quartet breathing new life into the sounds of the 1950s and 60s.", "offers": {"@type": "Offer", "url": "https://bst.ludus.com/", "price": "20.00", "priceCurrency": "USD", "availability": "https://schema.org/InStock"}}
+	
+
+	kingman-divas
+	https://bst.ludus.com/200519316
+	200519316
+	Kingman Divas: A Female Variety Show
+	Join Beale Street Theater as we shine the spotlight onto the talented females of Kingman!
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/20_optimized.webp
+	Kingman Divas: A Female Variety Show
+	$15 - $25
+	15
+	04/17/26
+	7:00:00 PM
+	6:00:00 PM
+	Beale Street Theater
+	302 E Beale Street, Kingman, AZ 86401
+	
+
+	
+
+	
+
+	Special Event
+	The Kingman Divas | Variety Show in Kingman AZ
+	Support local talent and enjoy a dazzling evening with The Kingman Divas at Beale Street Theater on April 17, 2026. Grab your tickets now!
+	{"@context": "https://schema.org", "@type": "Event", "name": "The Kingman Divas", "startDate": "2026-04-17T19:00", "location": {"@type": "Place", "name": "Beale Street Theater", "address": "302 E Beale St, Kingman, AZ 86401"}, "description": "Beale Street Theater proudly shines the spotlight on the incredible women of our community with a dazzling evening of entertainment.", "offers": {"@type": "Offer", "url": "https://bst.ludus.com/", "price": "15.00", "priceCurrency": "USD", "availability": "https://schema.org/InStock"}}
+	
+
+	gnoss
+	https://bst.ludus.com/200513867
+	200513867
+	Gnoss
+	Immerse yourself in a rich tapestry of acoustic layers, outstanding musicianship, deep traditions roots, and contemporary flair.
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/7_optimized-9f4360c6.webp
+	Gnoss
+	$15 - $35 | Students $15
+	15
+	05/07/26
+	7:00:00 PM
+	6:00:00 PM
+	Beale Street Theater
+	302 E Beale Street, Kingman, AZ 86401
+	
+
+	
+
+	
+
+	Concert Series
+	GNOSS Scottish Folk Band | Live Music Kingman AZ
+	Catch GNOSS, the award-winning Scottish neo-traditional folk band, live at Beale Street Theater in Kingman, AZ. Get your tickets for this incredible show!
+	{"@context": "https://schema.org", "@type": "Event", "name": "GNOSS", "startDate": "2026-04-30T19:00", "location": {"@type": "Place", "name": "Beale Street Theater", "address": "302 E Beale St, Kingman, AZ 86401"}, "description": "Acoustic layers and traditional roots with contemporary flair from Triple Scots Trad Music Awards nominees.", "offers": {"@type": "Offer", "url": "https://bst.ludus.com/", "price": "15.00", "priceCurrency": "USD", "availability": "https://schema.org/InStock"}}
+	
+
+	importance-of-being-earnest
+	https://bst.ludus.com/200484014
+	200484014
+	The Importance of Being Earnest
+	Oscar Wilde's classic is a delight from the first cucumber sandwich on as Jack's double life catches up with him.
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/bst-2026-season-posters-7-bst-tiobe-260306-07_optimized.webp
+	The Importance of Being Earnest
+	$15 - $35
+	15
+	05/07/26
+	7:00:00 PM
+	6:00:00 PM
+	Beale Street Theater
+	302 E Beale Street, Kingman, AZ 86401
+	
+
+	
+
+	
+
+	Community Theater
+	The Importance of Being Earnest | Kingman AZ
+	See Oscar Wilde's classic comedy, The Importance of Being Earnest, live at Beale Street Theater in Kingman, AZ on May 7, 2026. Buy your tickets today!
+	{"@context": "https://schema.org", "@type": "Event", "name": "The Importance of Being Earnest", "startDate": "2026-05-07T19:00", "location": {"@type": "Place", "name": "Beale Street Theater", "address": "302 E Beale St, Kingman, AZ 86401"}, "image": "https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/bst-2026-season-posters-7-bst-tiobe-260306-07_optimized+%281%29.webp", "description": "Oscar Wilde's classic is a delight from the first cucumber sandwich on as Jack's double life catches up with him.", "offers": {"@type": "Offer", "url": "https://bst.ludus.com/200484014", "price": "15.00", "priceCurrency": "USD", "availability": "https://schema.org/InStock"}}
+	
+
+	importance-of-being-earnest
+	https://bst.ludus.com/200484014
+	200484014
+	The Importance of Being Earnest
+	Oscar Wilde's classic is a delight from the first cucumber sandwich on as Jack's double life catches up with him.
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/bst-2026-season-posters-7-bst-tiobe-260306-07_optimized.webp
+	The Importance of Being Earnest
+	$15 - $35
+	15
+	05/08/26
+	7:00:00 PM
+	6:00:00 PM
+	Beale Street Theater
+	302 E Beale Street, Kingman, AZ 86401
+	
+
+	
+
+	
+
+	Community Theater
+	The Importance of Being Earnest | Kingman AZ
+	See Oscar Wilde's classic comedy, The Importance of Being Earnest, live at Beale Street Theater in Kingman, AZ on May 8, 2026. Buy your tickets today!
+	{"@context": "https://schema.org", "@type": "Event", "name": "The Importance of Being Earnest", "startDate": "2026-05-08T19:00", "location": {"@type": "Place", "name": "Beale Street Theater", "address": "302 E Beale St, Kingman, AZ 86401"}, "image": "https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/bst-2026-season-posters-7-bst-tiobe-260306-07_optimized+%281%29.webp", "description": "Oscar Wilde's classic is a delight from the first cucumber sandwich on as Jack's double life catches up with him.", "offers": {"@type": "Offer", "url": "https://bst.ludus.com/200484014", "price": "15.00", "priceCurrency": "USD", "availability": "https://schema.org/InStock"}}
+	
+
+	importance-of-being-earnest
+	https://bst.ludus.com/200484014
+	200484014
+	The Importance of Being Earnest
+	Oscar Wilde's classic is a delight from the first cucumber sandwich on as Jack's double life catches up with him.
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/bst-2026-season-posters-7-bst-tiobe-260306-07_optimized.webp
+	The Importance of Being Earnest
+	$15 - $35
+	15
+	05/09/26
+	1:00:00 PM
+	6:00:00 PM
+	Beale Street Theater
+	302 E Beale Street, Kingman, AZ 86401
+	
+
+	
+
+	
+
+	Community Theater
+	The Importance of Being Earnest | Kingman AZ
+	See Oscar Wilde's classic comedy, The Importance of Being Earnest, live at Beale Street Theater in Kingman, AZ on May 9, 2026. Buy your tickets today!
+	{"@context": "https://schema.org", "@type": "Event", "name": "The Importance of Being Earnest", "startDate": "2026-05-09T13:00", "location": {"@type": "Place", "name": "Beale Street Theater", "address": "302 E Beale St, Kingman, AZ 86401"}, "image": "https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/bst-2026-season-posters-7-bst-tiobe-260306-07_optimized+%281%29.webp", "description": "Oscar Wilde's classic is a delight from the first cucumber sandwich on as Jack's double life catches up with him.", "offers": {"@type": "Offer", "url": "https://bst.ludus.com/200484014", "price": "15.00", "priceCurrency": "USD", "availability": "https://schema.org/InStock"}}
+	
+
+	importance-of-being-earnest
+	https://bst.ludus.com/200484014
+	200484014
+	The Importance of Being Earnest
+	Oscar Wilde's classic is a delight from the first cucumber sandwich on as Jack's double life catches up with him.
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/bst-2026-season-posters-7-bst-tiobe-260306-07_optimized.webp
+	The Importance of Being Earnest
+	$15 - $35
+	15
+	05/09/26
+	7:00:00 PM
+	6:00:00 PM
+	Beale Street Theater
+	302 E Beale Street, Kingman, AZ 86401
+	
+
+	
+
+	
+
+	Community Theater
+	The Importance of Being Earnest | Kingman AZ
+	See Oscar Wilde's classic comedy, The Importance of Being Earnest, live at Beale Street Theater in Kingman, AZ on May 9, 2026. Buy your tickets today!
+	{"@context": "https://schema.org", "@type": "Event", "name": "The Importance of Being Earnest", "startDate": "2026-05-09T19:00", "location": {"@type": "Place", "name": "Beale Street Theater", "address": "302 E Beale St, Kingman, AZ 86401"}, "image": "https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/bst-2026-season-posters-7-bst-tiobe-260306-07_optimized+%281%29.webp", "description": "Oscar Wilde's classic is a delight from the first cucumber sandwich on as Jack's double life catches up with him.", "offers": {"@type": "Offer", "url": "https://bst.ludus.com/200484014", "price": "15.00", "priceCurrency": "USD", "availability": "https://schema.org/InStock"}}
+	
+
+	importance-of-being-earnest
+	https://bst.ludus.com/200484014
+	200484014
+	The Importance of Being Earnest
+	Oscar Wilde's classic is a delight from the first cucumber sandwich on as Jack's double life catches up with him.
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/bst-2026-season-posters-7-bst-tiobe-260306-07_optimized.webp
+	The Importance of Being Earnest
+	$15 - $35
+	15
+	05/14/26
+	7:00:00 PM
+	6:00:00 PM
+	Beale Street Theater
+	302 E Beale Street, Kingman, AZ 86401
+	
+
+	
+
+	
+
+	Community Theater
+	The Importance of Being Earnest | Kingman AZ
+	See Oscar Wilde's classic comedy, The Importance of Being Earnest, live at Beale Street Theater in Kingman, AZ on May 14, 2026. Buy your tickets today!
+	{"@context": "https://schema.org", "@type": "Event", "name": "The Importance of Being Earnest", "startDate": "2026-05-14T19:00", "location": {"@type": "Place", "name": "Beale Street Theater", "address": "302 E Beale St, Kingman, AZ 86401"}, "image": "https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/bst-2026-season-posters-7-bst-tiobe-260306-07_optimized+%281%29.webp", "description": "Oscar Wilde's classic is a delight from the first cucumber sandwich on as Jack's double life catches up with him.", "offers": {"@type": "Offer", "url": "https://bst.ludus.com/200484014", "price": "15.00", "priceCurrency": "USD", "availability": "https://schema.org/InStock"}}
+	
+
+	importance-of-being-earnest
+	https://bst.ludus.com/200484014
+	200484014
+	The Importance of Being Earnest
+	Oscar Wilde's classic is a delight from the first cucumber sandwich on as Jack's double life catches up with him.
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/bst-2026-season-posters-7-bst-tiobe-260306-07_optimized.webp
+	The Importance of Being Earnest
+	$15 - $35
+	15
+	05/15/26
+	7:00:00 PM
+	6:00:00 PM
+	Beale Street Theater
+	302 E Beale Street, Kingman, AZ 86401
+	
+
+	
+
+	
+
+	Community Theater
+	The Importance of Being Earnest | Kingman AZ
+	See Oscar Wilde's classic comedy, The Importance of Being Earnest, live at Beale Street Theater in Kingman, AZ on May 15, 2026. Buy your tickets today!
+	{"@context": "https://schema.org", "@type": "Event", "name": "The Importance of Being Earnest", "startDate": "2026-05-15T19:00", "location": {"@type": "Place", "name": "Beale Street Theater", "address": "302 E Beale St, Kingman, AZ 86401"}, "image": "https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/bst-2026-season-posters-7-bst-tiobe-260306-07_optimized+%281%29.webp", "description": "Oscar Wilde's classic is a delight from the first cucumber sandwich on as Jack's double life catches up with him.", "offers": {"@type": "Offer", "url": "https://bst.ludus.com/200484014", "price": "15.00", "priceCurrency": "USD", "availability": "https://schema.org/InStock"}}
+	
+
+	importance-of-being-earnest
+	https://bst.ludus.com/200484014
+	200484014
+	The Importance of Being Earnest
+	Oscar Wilde's classic is a delight from the first cucumber sandwich on as Jack's double life catches up with him.
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/bst-2026-season-posters-7-bst-tiobe-260306-07_optimized.webp
+	The Importance of Being Earnest
+	$15 - $35
+	15
+	05/16/26
+	1:00:00 PM
+	6:00:00 PM
+	Beale Street Theater
+	302 E Beale Street, Kingman, AZ 86401
+	
+
+	
+
+	
+
+	Community Theater
+	The Importance of Being Earnest | Kingman AZ
+	See Oscar Wilde's classic comedy, The Importance of Being Earnest, live at Beale Street Theater in Kingman, AZ on May 16, 2026. Buy your tickets today!
+	{"@context": "https://schema.org", "@type": "Event", "name": "The Importance of Being Earnest", "startDate": "2026-05-16T13:00", "location": {"@type": "Place", "name": "Beale Street Theater", "address": "302 E Beale St, Kingman, AZ 86401"}, "image": "https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/bst-2026-season-posters-7-bst-tiobe-260306-07_optimized+%281%29.webp", "description": "Oscar Wilde's classic is a delight from the first cucumber sandwich on as Jack's double life catches up with him.", "offers": {"@type": "Offer", "url": "https://bst.ludus.com/200484014", "price": "15.00", "priceCurrency": "USD", "availability": "https://schema.org/InStock"}}
+	
+
+	importance-of-being-earnest
+	https://bst.ludus.com/200484014
+	200484014
+	The Importance of Being Earnest
+	Oscar Wilde's classic is a delight from the first cucumber sandwich on as Jack's double life catches up with him.
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/bst-2026-season-posters-7-bst-tiobe-260306-07_optimized.webp
+	The Importance of Being Earnest
+	$15 - $35
+	15
+	05/16/26
+	7:00:00 PM
+	6:00:00 PM
+	Beale Street Theater
+	302 E Beale Street, Kingman, AZ 86401
+	
+
+	
+
+	
+
+	Community Theater
+	The Importance of Being Earnest | Kingman AZ
+	See Oscar Wilde's classic comedy, The Importance of Being Earnest, live at Beale Street Theater in Kingman, AZ on May 16, 2026. Buy your tickets today!
+	{"@context": "https://schema.org", "@type": "Event", "name": "The Importance of Being Earnest", "startDate": "2026-05-16T19:00", "location": {"@type": "Place", "name": "Beale Street Theater", "address": "302 E Beale St, Kingman, AZ 86401"}, "image": "https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/bst-2026-season-posters-7-bst-tiobe-260306-07_optimized+%281%29.webp", "description": "Oscar Wilde's classic is a delight from the first cucumber sandwich on as Jack's double life catches up with him.", "offers": {"@type": "Offer", "url": "https://bst.ludus.com/200484014", "price": "15.00", "priceCurrency": "USD", "availability": "https://schema.org/InStock"}}
+	
+
+	importance-of-being-earnest
+	https://bst.ludus.com/200484014
+	200484014
+	The Importance of Being Earnest
+	Oscar Wilde's classic is a delight from the first cucumber sandwich on as Jack's double life catches up with him.
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/bst-2026-season-posters-7-bst-tiobe-260306-07_optimized.webp
+	The Importance of Being Earnest
+	$15 - $35
+	15
+	05/22/26
+	7:00:00 PM
+	6:00:00 PM
+	Beale Street Theater
+	302 E Beale Street, Kingman, AZ 86401
+	
+
+	
+
+	
+
+	Community Theater
+	The Importance of Being Earnest | Kingman AZ
+	See Oscar Wilde's classic comedy, The Importance of Being Earnest, live at Beale Street Theater in Kingman, AZ on May 22, 2026. Buy your tickets today!
+	{"@context": "https://schema.org", "@type": "Event", "name": "The Importance of Being Earnest", "startDate": "2026-05-22T19:00", "location": {"@type": "Place", "name": "Beale Street Theater", "address": "302 E Beale St, Kingman, AZ 86401"}, "image": "https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/bst-2026-season-posters-7-bst-tiobe-260306-07_optimized+%281%29.webp", "description": "Oscar Wilde's classic is a delight from the first cucumber sandwich on as Jack's double life catches up with him.", "offers": {"@type": "Offer", "url": "https://bst.ludus.com/200484014", "price": "15.00", "priceCurrency": "USD", "availability": "https://schema.org/InStock"}}
+	
+
+	importance-of-being-earnest
+	https://bst.ludus.com/200484014
+	200484014
+	The Importance of Being Earnest
+	Oscar Wilde's classic is a delight from the first cucumber sandwich on as Jack's double life catches up with him.
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/bst-2026-season-posters-7-bst-tiobe-260306-07_optimized.webp
+	The Importance of Being Earnest
+	$15 - $35
+	15
+	05/23/26
+	1:00:00 PM
+	6:00:00 PM
+	Beale Street Theater
+	302 E Beale Street, Kingman, AZ 86401
+	
+
+	
+
+	
+
+	Community Theater
+	The Importance of Being Earnest | Kingman AZ
+	See Oscar Wilde's classic comedy, The Importance of Being Earnest, live at Beale Street Theater in Kingman, AZ on May 23, 2026. Buy your tickets today!
+	{"@context": "https://schema.org", "@type": "Event", "name": "The Importance of Being Earnest", "startDate": "2026-05-23T13:00", "location": {"@type": "Place", "name": "Beale Street Theater", "address": "302 E Beale St, Kingman, AZ 86401"}, "image": "https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/bst-2026-season-posters-7-bst-tiobe-260306-07_optimized+%281%29.webp", "description": "Oscar Wilde's classic is a delight from the first cucumber sandwich on as Jack's double life catches up with him.", "offers": {"@type": "Offer", "url": "https://bst.ludus.com/200484014", "price": "15.00", "priceCurrency": "USD", "availability": "https://schema.org/InStock"}}
+	
+
+	importance-of-being-earnest
+	https://bst.ludus.com/200484014
+	200484014
+	The Importance of Being Earnest
+	Oscar Wilde's classic is a delight from the first cucumber sandwich on as Jack's double life catches up with him.
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/bst-2026-season-posters-7-bst-tiobe-260306-07_optimized.webp
+	The Importance of Being Earnest
+	$15 - $35
+	15
+	05/23/26
+	7:00:00 PM
+	6:00:00 PM
+	Beale Street Theater
+	302 E Beale Street, Kingman, AZ 86401
+	
+
+	
+
+	
+
+	Community Theater
+	The Importance of Being Earnest | Kingman AZ
+	See Oscar Wilde's classic comedy, The Importance of Being Earnest, live at Beale Street Theater in Kingman, AZ on May 23, 2026. Buy your tickets today!
+	{"@context": "https://schema.org", "@type": "Event", "name": "The Importance of Being Earnest", "startDate": "2026-05-23T19:00", "location": {"@type": "Place", "name": "Beale Street Theater", "address": "302 E Beale St, Kingman, AZ 86401"}, "image": "https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/bst-2026-season-posters-7-bst-tiobe-260306-07_optimized+%281%29.webp", "description": "Oscar Wilde's classic is a delight from the first cucumber sandwich on as Jack's double life catches up with him.", "offers": {"@type": "Offer", "url": "https://bst.ludus.com/200484014", "price": "15.00", "priceCurrency": "USD", "availability": "https://schema.org/InStock"}}
+	
+
+	jason-lyle-black
+	https://bst.ludus.com/200519319
+	200519319
+	Jason Lyle Black: Internationally Acclaimed Pianist
+	An internationally-acclaimed pianist, composer, and bandleader taking audiences on a journey through 100 iconic musical hits.
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/5_optimized.webp
+	Jason Lyle Black: Internationally Acclaimed Pianist
+	$15 - $35
+	15
+	05/12/26
+	7:00:00 PM
+	6:00:00 PM
+	Beale Street Theater
+	302 E Beale Street, Kingman, AZ 86401
+	
+
+	
+
+	
+
+	Concert Series
+	Jason Lyle Black: Acclaimed Pianist | Beale Street Theater
+	oin internationally-acclaimed pianist, composer, and bandleader Jason Lyle Black for a musical journey through 100 iconic hits on May 12, 2026.
+Schema:
+	{"@context": "https://schema.org","@type": "MusicEvent","name": "Jason Lyle Black: Internationally Acclaimed Pianist", "description": "An internationally-acclaimed pianist, composer, and bandleader taking audiences on a journey through 100 iconic musical hits.","startDate": "2026-05-12T19:00:00","url": "https://bst.ludus.com/200519319","image": "https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/bst-jason-bl ck-show-poster-2026.png","location": {"@type": "PerformingArtsTheater", "name": "Beale Street Theater", "address": {"@type": "PostalAddress", "streetAddress": "302 E Beale Street","addressLocality": "Kingman","addressRegion": "AZ", "postalCode": "86401"}}
+	
+
+	peter-antoniou
+	https://bst.ludus.com/200487248
+	200487248
+	Psychic Comedian Peter Antoniou
+	From amazing the judges on America’s Got Talent, to headlining in Las Vegas!
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/bst-bsyt-2026-season-posters-13_optimized.webp
+	Psychic Comedian Peter Antoniou
+	$25
+	25
+	05/29/26
+	7:00:00 PM
+	6:00:00 PM
+	Beale Street Theater
+	302 E Beale Street, Kingman, AZ 86401
+	
+
+	
+
+	
+
+	Special Event
+	Peter Antoniou Psychic Comedian | Beale Street Theater
+	Prepare to have your mind read and your sides split! Peter Antoniou brings his psychic comedy show to Beale Street Theater in Kingman, AZ. Tickets on sale now!
+	{"@context": "https://schema.org", "@type": "Event", "name": "Peter Antoniou Psychic Comedian", "startDate": "2026-05-22T19:00", "location": {"@type": "Place", "name": "Beale Street Theater", "address": "302 E Beale St, Kingman, AZ 86401"}, "description": "Mind reading skills combined with British wit in an interactive and unforgettable comedy show that will leave you amazed.", "offers": {"@type": "Offer", "url": "https://bst.ludus.com/", "price": "25.00", "priceCurrency": "USD", "availability": "https://schema.org/InStock"}}
+	
+
+	peter-antoniou
+	https://bst.ludus.com/200487248
+	200487248
+	Psychic Comedian Peter Antoniou
+	From amazing the judges on America’s Got Talent, to headlining in Las Vegas!
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/bst-bsyt-2026-season-posters-13_optimized.webp
+	Psychic Comedian Peter Antoniou
+	$25
+	25
+	05/30/26
+	1:00:00 PM
+	6:00:00 PM
+	Beale Street Theater
+	302 E Beale Street, Kingman, AZ 86401
+	
+
+	
+
+	
+
+	Special Event
+	Peter Antoniou Psychic Comedian | Beale Street Theater
+	Prepare to have your mind read and your sides split! Peter Antoniou brings his psychic comedy show to Beale Street Theater in Kingman, AZ. Tickets on sale now!
+	{"@context": "https://schema.org", "@type": "Event", "name": "Peter Antoniou Psychic Comedian", "startDate": "2026-05-22T19:00", "location": {"@type": "Place", "name": "Beale Street Theater", "address": "302 E Beale St, Kingman, AZ 86401"}, "description": "Mind reading skills combined with British wit in an interactive and unforgettable comedy show that will leave you amazed.", "offers": {"@type": "Offer", "url": "https://bst.ludus.com/", "price": "25.00", "priceCurrency": "USD", "availability": "https://schema.org/InStock"}}
+	
+
+	peter-antoniou
+	https://bst.ludus.com/200487248
+	200487248
+	Psychic Comedian Peter Antoniou
+	From amazing the judges on America’s Got Talent, to headlining in Las Vegas!
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/bst-bsyt-2026-season-posters-13_optimized.webp
+	Psychic Comedian Peter Antoniou
+	$25
+	25
+	05/30/26
+	7:00:00 PM
+	6:00:00 PM
+	Beale Street Theater
+	302 E Beale Street, Kingman, AZ 86401
+	
+
+	
+
+	
+
+	Special Event
+	Peter Antoniou Psychic Comedian | Beale Street Theater
+	Prepare to have your mind read and your sides split! Peter Antoniou brings his psychic comedy show to Beale Street Theater in Kingman, AZ. Tickets on sale now!
+	{"@context": "https://schema.org", "@type": "Event", "name": "Peter Antoniou Psychic Comedian", "startDate": "2026-05-22T19:00", "location": {"@type": "Place", "name": "Beale Street Theater", "address": "302 E Beale St, Kingman, AZ 86401"}, "description": "Mind reading skills combined with British wit in an interactive and unforgettable comedy show that will leave you amazed.", "offers": {"@type": "Offer", "url": "https://bst.ludus.com/", "price": "25.00", "priceCurrency": "USD", "availability": "https://schema.org/InStock"}}
+	
+
+	lose-your-illusion
+	https://bst.ludus.com/200519320
+	200519320
+	Lose Your Illusion: Guns N' Roses Tribute Show
+	Come aboard and ride the "Nightrain" with the most authentic Guns N' Roses tribute band.
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/BEACH+BOYS+LIVE+TRIBUTE+PERFORMED+BY+CATCHWAVE+March+20+2026+7pm_optimized.webp
+	Lose Your Illusion: Guns N' Roses Tribute Show
+	$15 - $35
+	15
+	06/05/26
+	7:00:00 PM
+	6:00:00 PM
+	Beale Street Theater
+	302 E Beale Street, Kingman, AZ 86401
+	
+
+	
+
+	
+
+	Concert Series
+	Lose Your Illusion Guns N Roses Tribute | Kingman AZ
+	Rock out with Lose Your Illusion the ultimate Guns N' Roses tribute band at Beale Street Theater in Kingman, AZ on June 5, 2026. Get your tickets!
+	{"@context": "https://schema.org", "@type": "Event", "name": "Lose Your Illusion: Guns N' Roses Tribute", "startDate": "2026-06-05T19:00", "location": {"@type": "Place", "name": "Beale Street Theater", "address": "302 E Beale St, Kingman, AZ 86401"}, "description": "Welcome to the jungle! Ride the Nightrain with the most authentic Guns N' Roses tribute band.", "offers": {"@type": "Offer", "url": "https://bst.ludus.com/200519320", "price": "15.00", "priceCurrency": "USD", "availability": "https://schema.org/InStock"}}
+	
+
+	shades-of-buble
+	https://bst.ludus.com/200513869
+	200513869
+	Shades of Bublé
+	Be wowed by the harmonies of Shades of Bublé, a Michael Bublé tribute band.
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/bst-bsyt-2026-season-posters-10_optimized+%281%29.webp
+	Shades of Bublé
+	$15 - $35
+	35
+	06/06/26
+	7:00:00 PM
+	6:00:00 PM
+	Beale Street Theater
+	302 E Beale Street, Kingman, AZ 86401
+	
+
+	
+
+	
+
+	Concert Series
+	Shades of Bublé Tribute | Concert Series Kingman AZ
+	Be wowed by the harmonies of Shades of Bublé at Beale Street Theater in Kingman, AZ. Enjoy jazz standards and pop hits live. Grab your tickets now!
+	{"@context": "https://schema.org", "@type": "Event", "name": "Shades of Bublé", "startDate": "2026-05-15T19:00", "location": {"@type": "Place", "name": "Beale Street Theater", "address": "302 E Beale St, Kingman, AZ 86401"}, "image": "https://photos.app.goo.gl/Wy4rwHDrcHf8eTsD9", "description": "A Michael Bublé tribute band performing jazz standards and Billboard chart-toppers with incredible three-part harmony.", "offers": {"@type": "Offer", "url": "https://bst.ludus.com/200513869", "price": "15.00", "priceCurrency": "USD", "availability": "https://schema.org/InStock"}}
+	
+
+	all-keyd-up
+	https://bst.ludus.com/200519321
+	200519321
+	All Key'd Up: Billy Joel Tribute Show
+	Recreates the raw energy and swagger of one of America's greatest live acts, Billy Joel.
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/BEACH+BOYS+LIVE+TRIBUTE+PERFORMED+BY+CATCHWAVE+March+20+2026+7pm_optimized.webp
+	All Key'd Up: Billy Joel Tribute Show
+	$15 - $35
+	15
+	06/26/06
+	7:00:00 PM
+	6:00:00 PM
+	Beale Street Theater
+	302 E Beale Street, Kingman, AZ 86401
+	
+
+	
+
+	
+
+	Concert Series
+	All Key'd Up Billy Joel Tribute | Kingman AZ Concert
+	Sing along to the Piano Man's greatest hits with All Key'd Up at Beale Street Theater in Kingman, AZ on June 26, 2026. Secure your tribute concert tickets!
+	{"@context": "https://schema.org", "@type": "Event", "name": "All Key'd Up: Billy Joel Tribute Show", "startDate": "2026-06-26T19:00", "location": {"@type": "Place", "name": "Beale Street Theater", "address": "302 E Beale St, Kingman, AZ 86401"}, "image": "https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/BEACH+BOYS+LIVE+TRIBUTE+PERFORMED+BY+CATCHWAVE+March+20+2026+7pm_optimized.webp", "description": "Recreates the raw energy and swagger of one of America's greatest live acts Billy Joel.", "offers": {"@type": "Offer", "url": "https://bst.ludus.com/200519321", "price": "15.00", "priceCurrency": "USD", "availability": "https://schema.org/InStock"}}
+	
+
+	shine-on-floyd
+	https://bst.ludus.com/200516966
+	200516966
+	Shine On Floyd
+	Shine On Floyd brings the vocals and the lasers, making this tribute a whole Pink Floyd experience!
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/BEACH+BOYS+LIVE+TRIBUTE+PERFORMED+BY+CATCHWAVE+March+20+2026+7pm_optimized.webp
+	Shine On Floyd
+	$15 - $35
+	15
+	07/18/26
+	7:00:00 PM
+	6:00:00 PM
+	Beale Street Theater
+	302 E Beale Street, Kingman, AZ 86401
+	
+
+	
+
+	
+
+	Concert Series
+	Shine On Floyd Tribute | Live Concert in Kingman AZ
+	Experience the ultimate Pink Floyd tribute with Shine On Floyd at Beale Street Theater on July 18, 2026. Lasers, vocals, and classic hits! Buy tickets now.
+	{"@context": "https://schema.org", "@type": "Event", "name": "Shine On Floyd", "startDate": "2026-07-18T19:00", "location": {"@type": "Place", "name": "Beale Street Theater", "address": "302 E Beale St, Kingman, AZ 86401"}, "description": "Shine On Floyd brings the vocals and the lasers making this tribute a whole Pink Floyd experience!", "offers": {"@type": "Offer", "url": "https://bst.ludus.com/200516966", "price": "15.00", "priceCurrency": "USD", "availability": "https://schema.org/InStock"}}
+	
+
+Support Collection
+
+
+uuid
+	item
+	program_id
+	program_name
+	program_category
+	slug
+	headline
+	short_description
+	full_description
+	donation_amount
+	benefits
+	cta_text
+	cta_url
+	contact_email
+	seo_title
+	seo_description
+	image
+	b8c9a5fa-fcaa-4056-ab5f-02148d2cafc7
+	1
+	adopt-a-seat
+	Adopt-A-Seat
+	["Donation"]
+	adopt-a-seat
+	Become a Vital Part of the Beale Street Theater!
+	Leave a lasting legacy with a personalized brass plaque on your chosen seat.
+	For a tax-deductible donation of $1,000, a personalized engraved brass plaque will be attached to the seat of your choice (subject to availability). Seat naming rights will remain in effect for the next 10 years. Each personalized nameplate includes space for 2 lines. You can choose to display your own name or honor someone special. You can dedicate a seat as an individual, in memory of a loved one, or with the name of your business.
+	$1,000
+	10-year seat naming rights, Personalized brass plaque (2 lines), Tax-deductible donation
+	Adopt A Seat
+	/support/adopt-a-seat
+	info@bealestreettheater.com
+	Adopt-A-Seat Program | Support Beale Street Theater Kingman
+	Leave a lasting legacy at Beale Street Theater. $1,000 tax-deductible donation gets you a personalized brass plaque on your chosen seat for 10 years.
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/3_optimized+%283%29-9a5eb1e9.webp
+	a57d5bc3-f96e-4f78-a821-0cbdd5e2bb08
+	2
+	pay-it-forward
+	<p class="rteBlock">Pay It Forward</p>
+	["Donation"]
+	pay-it-forward-tickets
+	Making Live Theater Accessible to All
+	Donate unused tickets to make live theater accessible to underserved youth and families.
+	The Pay-It-Forward Ticket Donation Program at Beale Street Theater allows you to donate unused tickets, making live theater accessible to underserved youth and families. By donating tickets, you will share the joy of live performances with those who might not otherwise have the chance to attend. You or your business can get involved by purchasing tickets to benefit local families. Businesses that support the arts provide a community impact and enjoy potential tax benefits. If you need to donate unused tickets, contact the theater to arrange for ticket donations.
+	Variable - ticket value
+	Tax benefits, Community impact, Support underserved families, Business recognition
+	Donate Tickets
+	/support/donate-tickets
+	info@bealestreettheater.com
+	Pay It Forward Tickets | Donate Theater Tickets Kingman AZ
+	Donate unused tickets to help underserved youth and families experience live theater. Support the Pay-It-Forward program at Beale Street Theater.
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/3_optimized+%283%29-9a5eb1e9.webp
+	60926c64-bf93-40a2-8631-73fc88a34e4b
+	3
+	av-equipment-fund
+	<p class="rteBlock">Fund Our Equipment</p>
+	["Donation","Sponsorship"]
+	av-equipment-fund
+	Fund the Audio/Visual Equipment
+	Help us deliver high-quality productions our community deserves.
+	Beale Street Theater is almost ready to shine! We're fundraising for the professional Audio/Visual equipment needed to deliver high-quality productions that our community deserves. Every microphone, spotlight, and projector helps bring stories to life. To give you the best experience possible here at Beale Street Theater, we need your support to acquire professional-grade equipment.
+	Variable
+	Tax-deductible donation, Recognition in programs, Support professional productions
+	Support Equipment Fund
+	/support/av-equipment
+	info@bealestreettheater.com
+	Audio Visual Equipment Fund | Support Beale Street Theater Kingman
+	Help fund professional audio/visual equipment for Beale Street Theater. Every donation helps bring high-quality productions to Kingman. Tax-deductible.
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/3_optimized+%283%29-9a5eb1e9.webp
+	b71c4159-3d1f-47f4-a8bc-0220caf6e616
+	4
+	sponsor-basic
+	<p class="rteBlock">Basic Sponsorship </p>
+	["Sponsorship"]
+	sponsor-basic
+	Support a Production - Basic Level
+	Entry-level sponsorship with logo placement and tickets.
+	A show sponsorship is an investment that makes an impact on the arts right here in our community. Each production is a large undertaking, and your sponsorship will support our programming including: royalties, sheet music, scripts, musicians, designers, technicians, lighting, sound, costumes, makeup and hair, and advertising costs.
+	$100
+	Logo on posters, Social media post, 2 complimentary tickets
+	Become a Basic Sponsor
+	mailto:info@bealestreettheater.com?subject=Basic Sponsorship Inquiry
+	info@bealestreettheater.com
+	Basic Show Sponsorship $100 | Sponsor Beale Street Theater
+	Sponsor a show for $100. Includes logo on posters, social media post, and 2 tickets. Support community theater in Kingman, Arizona.
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/3_optimized+%283%29-9a5eb1e9.webp
+	368cb09a-a650-4f18-be85-af1bf25b5066
+	5
+	sponsor-leading
+	Leading Sponsorship
+	["Sponsorship"]
+	sponsor-leading
+	Support a Production - Leading Level
+	Mid-tier sponsorship with enhanced recognition and benefits.
+	Production Sponsors are recognized in the program, invited to the Opening Night reception, and have the opportunity to attend rehearsals for a sneak peak. Your generosity will support the costs of royalties, sheet music, scripts, musicians, designers, technicians, lighting, sound, costumes, makeup and hair, and advertising costs.
+	$500
+	Logo on posters, Social media post, Shout out from stage, 8 complimentary tickets, Opening night invitation
+	Become a Leading Sponsor
+	mailto:info@bealestreettheater.com?subject=Leading Sponsorship Inquiry
+	info@bealestreettheater.com
+	Leading Show Sponsorship $500 | Sponsor Beale Street Theater
+	Sponsor a show for $500. Logo placement, social media, stage shout out, 8 tickets, opening night invitation. Support Kingman theater.
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/3_optimized+%283%29-9a5eb1e9.webp
+	1f09ee88-710b-4611-acba-998dd0a88fdc
+	6
+	sponsor-premium
+	Premium Sponsorship
+	["Sponsorship"]
+	sponsor-premium
+	Support a Production - Premium Level
+	Premium sponsorship with maximum visibility and benefits.
+	Premium sponsorship offers the highest level of recognition for your support. Production Sponsors are recognized in the program, invited to the Opening Night reception, and have the opportunity to attend rehearsals for a sneak peak.
+	$1,000
+	Logo on posters, Social media post, Advertisement from stage, 15 complimentary tickets, Opening night invitation, Rehearsal access
+	Become a Premium Sponsor
+	mailto:info@bealestreettheater.com?subject=Premium Sponsorship Inquiry
+	info@bealestreettheater.com
+	Premium Show Sponsorship $1000 | Sponsor Beale Street Theater
+	Sponsor a show for $1,000. Maximum visibility with logo placement, stage advertisement, 15 tickets, and VIP access. Support community arts.
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/3_optimized+%283%29-9a5eb1e9.webp
+	1ead05c9-c83e-4143-887f-73722ccad86d
+	7
+	sponsor-corporate
+	Corporate Sponsorship
+	["Sponsorship"]
+	sponsor-corporate
+	Support a Production - Corporate Level
+	Top-tier corporate sponsorship with exclusive lounge access.
+	Our highest level of show sponsorship includes exclusive benefits for your corporate team. Production Sponsors are recognized in the program, invited to the Opening Night reception, and have the opportunity to attend rehearsals for a sneak peak.
+	$1,500
+	Logo on posters, Social media post, Advertisement from stage, 20 complimentary tickets, Use of Founders Lounge for pre/post-show reception, Opening night invitation, Rehearsal access
+	Become a Corporate Sponsor
+	mailto:info@bealestreettheater.com?subject=Corporate Sponsorship Inquiry
+	info@bealestreettheater.com
+	Corporate Show Sponsorship $1500 | Sponsor Beale Street Theater
+	Corporate sponsorship $1,500. Logo placement, 20 tickets, exclusive Founders Lounge access for your team. Premier theater sponsorship in Kingman.
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/3_optimized+%283%29-9a5eb1e9.webp
+	6f54c091-eb0f-483a-92c5-278b413341ec
+	8
+	volunteer-theater
+	<p class="rteBlock">Volunteer Opportunities</p>
+	["Volunteer","Development"]
+	volunteer-theater
+	Become Part of a Creative Community
+	Join our volunteer team backstage, front-of-house, or in production.
+	Step into the enchanting world of storytelling and performance by volunteering with Beale Street Theater. This community-driven theater is committed to bringing captivating productions to life, and your involvement can make a significant difference. As a volunteer with Beale Street Theater, you might find yourself working backstage, assisting with set design, or helping with front-of-house operations during performances. The magic of theater extends beyond the stage, and your dedication can enhance the overall experience for both the audience and the talented performers. Volunteer roles at KCA are as diverse as the art forms it supports. From assisting with art exhibitions to organizing community events, your contributions can help ignite the spark of creativity in individuals of all ages.
+	N/A - Time donation
+	Behind-the-scenes access, Skills development, Community connections, Event invitations, Experience credit
+	Volunteer With Us
+	mailto:housemanager@bealestreettheater.com?subject=Volunteer Inquiry
+	housemanager@bealestreettheater.com
+	Volunteer Opportunities | Beale Street Theater Kingman AZ
+	Volunteer with Beale Street Theater. Backstage, front-of-house, set design opportunities. Join our creative community in downtown Kingman.
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/3_optimized+%283%29-9a5eb1e9.webp
+	e83d1c8c-face-45be-ba56-84e828fb732b
+	9
+	auditions
+	<p class="rteBlock">Auditions</p>
+	["Volunteer","Development"]
+	auditions
+	Step Into The Spotlight
+	Audition for community and youth theater productions at Beale Street Theater.
+	We welcome performers of all experience levels to audition for our diverse productions. Youth Auditions Policy: No preparation or prior experience required. Eligibility: Open to aspiring performers ages 12-18. Information: Dates are posted on the Kingman Center for the Arts website and our official social media channels. Prepare For Auditions With Matt - Check out video tutorials on selecting monologues and audition preparation.
+	N/A - Free to audition
+	Performance experience, Skills development, Professional-grade venue, Community theater credit, Youth programs available
+	Audition Info
+	/auditions
+	info@bealestreettheater.com
+	Auditions | Community & Youth Theater Kingman AZ
+	Audition for Beale Street Theater productions. Community theater and youth programs ages 12-18. No experience required. Kingman, Arizona.
+	https://irp.cdn-website.com/a2e2bd3e/dms3rep/multi/3_optimized+%283%29-9a5eb1e9.webp
+	
+
+FAQs per page
+GENERAL: 
+
+
+
+
+slug
+	question
+	answer
+	schema_markup
+	where-is-the-theater-located
+	Where is the theater located?
+	We are located in the heart of the historic arts district at 302 E Beale St, Kingman, AZ 86401.
+	{"@context": "https://schema.org", "@type": "Question", "name": "Where is the theater located?", "acceptedAnswer": {"@type": "Answer", "text": "We are located in the heart of the historic arts district at 302 E Beale St, Kingman, AZ 86401."}}
+	what-is-the-parking-situation
+	What is the parking situation?
+	Free street parking is available along Beale St, and there is an on-site parking lot. For major events like 'First Fridays,' please be aware of local street closures between 4th and 6th streets.
+	{"@context": "https://schema.org", "@type": "Question", "name": "What is the parking situation?", "acceptedAnswer": {"@type": "Answer", "text": "Free street parking is available along Beale St, and there is an on-site parking lot. For major events like 'First Fridays,' please be aware of local street closures between 4th and 6th streets."}}
+	are-there-dining-options-nearby
+	Are there dining options nearby?
+	Yes! We are steps away from popular local spots including Rickety Cricket Brewing, Grand Canyon Brewing + Distillery, and the iconic Mr D’z Route 66 Diner.
+	{"@context": "https://schema.org", "@type": "Question", "name": "Are there dining options nearby?", "acceptedAnswer": {"@type": "Answer", "text": "Yes! We are steps away from popular local spots including Rickety Cricket Brewing, Grand Canyon Brewing + Distillery, and the iconic Mr D’z Route 66 Diner."}}
+	is-the-venue-accessible
+	Is the venue accessible?
+	Absolutely. The theater features a wheelchair-accessible entrance, parking lot, and restrooms. Seating marked with a wheelchair icon is reserved for patrons in wheelchairs or walkers with seats.
+	{"@context": "https://schema.org", "@type": "Question", "name": "Is the venue accessible?", "acceptedAnswer": {"@type": "Answer", "text": "Absolutely. The theater features a wheelchair-accessible entrance, parking lot, and restrooms. Seating marked with a wheelchair icon is reserved for patrons in wheelchairs or walkers with seats."}}
+	
+
+
+
+SHOW PAGE
+
+
+
+
+slug
+	question
+	answer
+	schema_markup
+	what-are-box-office-hours
+	What are your box office hours?
+	The physical box office is open Thursday and Friday from 10:00 AM to 6:00 PM. You can also purchase tickets 24/7 on our website.
+	{"@context": "https://schema.org", "@type": "Question", "name": "What are your box office hours?", "acceptedAnswer": {"@type": "Answer", "text": "The physical box office is open Thursday and Friday from 10:00 AM to 6:00 PM. You can also purchase tickets 24/7 on our website."}}
+	what-time-do-doors-open
+	What time do doors open?
+	Doors typically open 60 minutes before the scheduled showtime. Please check your specific event ticket for exact times.
+	{"@context": "https://schema.org", "@type": "Question", "name": "What time do doors open?", "acceptedAnswer": {"@type": "Answer", "text": "Doors typically open 60 minutes before the scheduled showtime. Please check your specific event ticket for exact times."}}
+	wrong-seats-exchange
+	What if I book seats for the wrong show?
+	Please contact us at info@bealestreettheater.com or 928-228-5817 and we would be happy to exchange those seats for you.
+	{"@context": "https://schema.org", "@type": "Question", "name": "What if I book seats for the wrong show?", "acceptedAnswer": {"@type": "Answer", "text": "Please contact us at info@bealestreettheater.com or 928-228-5817 and we would be happy to exchange those seats for you."}}
+	do-you-have-a-bar
+	Does the theater serve alcohol?
+	We do not have a formal liquor license, but we pull special event permits for certain shows. We frequently offer a bar at rock concerts or comedy events—check specific show notices!
+	{"@context": "https://schema.org", "@type": "Question", "name": "Does the theater serve alcohol?", "acceptedAnswer": {"@type": "Answer", "text": "We do not have a formal liquor license, but we pull special event permits for certain shows. We frequently offer a bar at rock concerts or comedy events—check specific show notices!"}}
+	age-restrictions
+	Are there age restrictions for shows?
+	Most of our concerts and community theater productions are all-ages. However, specific adult comedy or late-night events may have age recommendations noted on the ticketing page.
+	{"@context": "https://schema.org", "@type": "Question", "name": "Are there age restrictions for shows?", "acceptedAnswer": {"@type": "Answer", "text": "Most of our concerts and community theater productions are all-ages. However, specific adult comedy or late-night events may have age recommendations noted on the ticketing page."}}
+	
+
+
+
+SUPPORT AND FUNDRAISERS
+
+
+
+
+You can contribute through our Adopt-A-Seat campaign for a $1,000 tax-deductible donation, or participate in our Pay-It-Forward program to provide tickets to underserved families.
+	{"@context": "https://schema.org", "@type": "Question", "name": "How can I support the theater's renovation?", "acceptedAnswer": {"@type": "Answer", "text": "You can contribute through our Adopt-A-Seat campaign for a $1,000 tax-deductible donation, or participate in our Pay-It-Forward program to provide tickets to underserved families."}}
+	It allows patrons or businesses to donate unused tickets so that local youth and families in need can experience the magic of live theater.
+	{"@context": "https://schema.org", "@type": "Question", "name": "What is the Pay-It-Forward program?", "acceptedAnswer": {"@type": "Answer", "text": "It allows patrons or businesses to donate unused tickets so that local youth and families in need can experience the magic of live theater."}}
+	We are always looking for help! For ushering, email housemanager@bealestreettheater.com. For backstage, set design, or other production roles, email info@bealestreettheater.com.
+	{"@context": "https://schema.org", "@type": "Question", "name": "How do I volunteer?", "acceptedAnswer": {"@type": "Answer", "text": "We are always looking for help! For ushering, email housemanager@bealestreettheater.com. For backstage, set design, or other production roles, email info@bealestreettheater.com."}}
+	Yes, Beale Street Theater (managed by Kingman Center for the Arts) is a registered 501(c)(3) nonprofit organization, making your generous donations tax-deductible.
+	{"@context": "https://schema.org", "@type": "Question", "name": "Are donations to the theater tax-deductible?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, Beale Street Theater (managed by Kingman Center for the Arts) is a registered 501(c)(3) nonprofit organization, making your generous donations tax-deductible."}}
+	
+
+Class and Show URLs
+Classes
+
+
+https://kca.ludus.com/index.php?sections=classes
+
+BSYT youth programs
+
+https://kingmanarts.org/beale-st-youth-theater
+
+
+
+
+Community workshops
+
+
+https://kingmanarts.org/performing-arts-classes
+SEO
+
+
+Task Category
+	Specific Action Item
+	Feature or Tool Used
+	Frequency or Timing
+	Benefit or SEO Purpose
+	Implementation Details
+	Source
+	Business Profile Setup
+	Set Up Business Profile and Sync with GBP
+	Content > Business Info
+	Immediate
+	Duda's AI uses this to auto-generate accurate text; syncing creates a 'Single Source of Truth' for Google.
+	Fill out Address, Phone, and Socials. Connect Google Business Profile to sync updates every 12 hours.
+	1
+	Schema Markup
+	Enable Local Business Schema
+	Business Info Tab Toggle
+	Immediate
+	Makes organization readable to Google Maps and AI search bots.
+	Toggle 'Enable Local Business Schema' ON in the Business Info tab.
+	1
+	AI Configuration
+	Configure AI Voice Tone
+	AI Assistant Settings
+	Immediate
+	Ensures all generated blog and copy text sounds consistent (e.g., community-focused).
+	Open AI Assistant settings and define tone (e.g., 'professional, encouraging').
+	1
+	Analytics Setup
+	Install Google Tag Manager
+	Site Settings > Tracking Code
+	Immediate (Build Phase)
+	Routes all tracking through one layer; allows for event tracking like 'Buy Tickets' clicks.
+	Paste first GTM snippet in Header and second immediately after opening body tag.
+	2-4
+	Analytics Setup
+	Connect GA4 through GTM
+	GTM Tags / GA4 Configuration
+	Immediate (Build Phase)
+	Enables realtime verification and traffic measurement without direct site code bloat.
+	Create GA4 Configuration tag in GTM using Measurement ID; trigger on All Pages.
+	3, 4
+	Nonprofit Integration
+	Embed Donation Widget
+	HTML Widget / Donorbox
+	Immediate
+	Keeps donors on-site (better for trust/SEO) and handles recurring logic.
+	Copy embed code from Donorbox and paste into Duda HTML widget on the Donate page.
+	1
+	Content Management
+	Create Internal Collection for Concerts
+	Internal Collections / CSV Import
+	Phase 1 (Days 1-3)
+	Handles recurring events without rebuilding pages; drives Dynamic Pages.
+	Upload CSV with columns for Event Name, Date, Time, Location, and Ticket Link.
+	1, 2
+	Search Verification
+	Create Search Console Domain Property
+	Google Search Console / GoDaddy DNS
+	3–4 Days Before Launch
+	Verifies entire domain permanently for indexing and performance tracking.
+	Add a TXT record to GoDaddy DNS using the value provided by Search Console.
+	4
+	SEO - Events
+	Inject Event Schema for Major Concerts
+	Page Settings > SEO > Head HTML
+	Launch Week / Per Event
+	Enhances search visibility with rich results for theater events.
+	Generate JSON-LD Event Schema (Merkle or ChatGPT) and paste into specific event page Head HTML.
+	1
+	Local SEO
+	Enable FAQ Schema in Accordions
+	Accordion Widget Settings
+	Launch Week / Phase 3
+	Helps answers appear directly in Google Search and feeds AI summaries.
+	Add 6-8 questions to an accordion and toggle 'Enable FAQ Schema' ON.
+	1, 2
+	SEO Strategy
+	Submit Sitemap
+	Google Search Console
+	Launch Week (Post-Domain Pointing)
+	Ensures Google indexes the new structure rather than old redirects.
+	Submit 'yourdomain.com/sitemap.xml' only after the domain points to the new site.
+	2, 4
+	Blog Management
+	Auto-Generate Blog Metadata
+	AI SEO Assistant
+	Ongoing / Per Post
+	Optimizes Title Tags and Meta Descriptions based on content.
+	Use the AI SEO Assistant within Blog Settings for every post.
+	1
+	Maintenance
+	Upload Authentic Photos
+	Google Business Profile
+	Weekly
+	Google's 'Vision AI' scans images to verify real-world existence; signals active status.
+	Upload 5+ new, high-quality photos (interior/exterior/team) weekly.
+	1
+	Maintenance
+	Respond to All Reviews
+	Google Business Profile / Socials
+	Weekly
+	Increases 'Trust' signal and Review Velocity for local rankings.
+	Aim for a steady stream of 2-3 new reviews weekly and respond to all.
+	1
+	
+
+GOOGLE REVIEWS
+
+
+uuid
+	item
+	Reviewer
+	Rating
+	Review
+	Theater Response
+	
+
+	a14d5c40-45bd-49a8-91a2-877ea8c5644e
+	home
+	Lilly
+	5
+	2026-01-01
+	Very nice venue, the staff were very nice, & welcoming, very easy process getting our Tix at Will-Call, we went for the Noise Pollution (AC/DC tribute band), and Mr. Crowley the Ozzy Experience band and it was a lot of fun- I just hope the bar improves, they only sold beer and wine, and they ran out of beer, I hope they continue to book more rock tribute bands, Classic Rock always seems to pull in good crowds. I would definitely return for more music shows like that.
+	
+
+	
+
+	home
+	Jim Marsden
+	5
+	2026-01-01
+	All completely remodeled and open to the public. We saw the production Annie and it was fantastic
+	No written response
+	
+
+	home
+	Alexander Sol
+	5
+	2026-01-01
+	This has transformed into a beautiful performance theater. The walls have large sound-dampening panels the make it great for all kinds of performances.
+	
+
+	
+
+	home
+	Donna Downing
+	5
+	2026-01-01
+	Beautiful renovated theater. Excellent shows with reasonable prices!
+	No written response
+	
+
+	home
+	Rockin Routez
+	2
+	2026-01-01
+	An amazing theater and location! Awesome shows!!!
+	No written response
+	
+
+	home
+	Butterfly Bakery
+	5
+	2026-01-01
+	Such a lovely theater! We love all the shows there!!!
+	No written response
+	
+
+	home
+	Emma Downing
+	5
+	2026-01-01
+	Amazing! I love all the shows at the Beale Street Theater! And the V.I.P lounge is amazing!
+	No written response
+	
+
+	home
+	Jon Ritch
+	5
+	2025-12-01
+	Support local artists!! This theatre is active. There are many talented people that work to make the Beale Street Theater a great place for dates, children and really anyone looking for good entertainment. Come on folks! Support your town and go see a show!
+	
+
+	
+
+	home
+	Fred Jordan
+	5
+	2025-11-01
+	I was absolutely in thralled by my experience in the theater. Absolutely amazing. Two thumbs up.
+	No written response
+	
+
+	home
+	Cullin Pattillo
+	5
+	2025-10-01
+	Magnificent Venue. A true labor of love for both theater and our community. Thank you for bringing back the theater of my childhood.
+	Thank you! We appreciate your review and we hope you will enjoy all the shows we will produce and presents!
+	
+
+	home
+	John Dibert
+	5
+	2025-09-01
+	Even though the finishing touches are still in the works, this community theater is going to be an amazing asset to Kingman!
+	Thank you for your review! Yes it's a work in progress and we appreciate your support! Our volunteers and patrons like you are what makes this place unique and we hope a home for our community!
+	
+
+	home
+	motogp1gprix1
+	5
+	2025-09-01
+	The plays this theater puts are are done so well. So many talented actors in our little town. We also attend the ghost walk every Halloween which are always fun with a surprise ending worth that is definitely worth the wait.
+	Thank you for your review and for being a patrons and supporter. We do have to give credit to Project Movement for the surprise at the end of every Historical Ghostwalks. We hope you join us again this year.
+	
+
+	home
+	Christine Fredriksen
+	2
+	2025-08-01
+	Beale Street Theater provides quality entertainment, engaging youth theater education, and a beautiful community venue. Highly recommend.
+	
+
+	
+
+	home
+	Harley Daze
+	5
+	2025-08-01
+	I love the Beale Street Theater! It's truly an amazing place!!
+	Thank you for your review! We love that you love it, and our entire team of volunteers work hard to achieve this! Thank you for your support!
+	
+
+	home
+	chanel turner
+	5
+	2025-03-01
+	Beale St Theater is a phenomenal asset to our community! Whether you're a seasoned theater enthusiast or just discovering your passion for the arts, this place has something for everyone. From children's workshops to amazing musical productions. If you're looking to immerse yourself in the world of theater, look no further!
+	
+
+	
+
+	home
+	Maria Martinez
+	5
+	2023-03-01
+	If the star rating went up to ten ,I would give 20 stars, I did not know we had such a fantastic orchestra in kingman, everyone is so talented. I went to go see the performance (the sound of music) and I was blown away at the quality of the performance.
+	
+
+	
+
+	home
+	Jodi Crowley
+	5
+	2022-03-01
+	My daughter went to a Summer Day Camp put on by Beale Street Theater. Thank you for your ... everything. The support the training, the interaction with the youth. Great program!
+	
+
+	
+
+	home
+	Gentree Bodily
+	5
+	2020-03-01
+	We have LOVED the culture that the theater has brought to our town. We have loved all the plays!
+	No written response
+	
+
+	home
+	Sarah Knievel
+	5
+	2020-03-01
+	My son was at Little Mermaid last night, he loved it!
+	No written response
+	
+
+	home
+	desiree lively
+	5
+	2020-03-01
+	No written review
+	No written response
+	
+
+	home
+	John Santa Cruz
+	5
+	2020-03-01
+	No written review
+	No written response
+	
+
+	home
+	lilly Gold
+	5
+	2020-03-01
+	Not public friendly. Must know someone or be out of this world good to be in there public plays. Just a unfair place place for new cast!
+	No written response
+	
+
+Venue Contact and Information
+Section 1: Public Contact & Operating Details
+Field
+	Value
+	uuid
+	2c2c23fd-2bac-4ded-82e0-ee033ed69e0c
+	item
+	1
+	venue\_name
+	Beale Street Theater
+	category
+	Performing Arts Theater
+	official\_address
+	302 E Beale St, Kingman, AZ 86401
+	phone\_primary
+	928-228-5817
+	phone\_box\_office
+	928-228-5817
+	email\_general
+	info@bealestreettheater.com
+	email\_house\_manager
+	housemanager@bealestreettheater.com
+	website\_url
+	http://www.bealestreettheater.com
+	box\_office\_hours
+	Thursday and Friday from 10:00 AM to 6:00 PM
+	facebook\_url
+	https://www.facebook.com/bealestreettheater
+	instagram\_handle
+	@bealestreettheater
+	Section 2: Organizational, Historic & Geographic Details
+Field
+	Value
+	parking\_info
+	Free street parking is available along Beale St, and there is an on-site parking lot.
+	accessibility\_info
+	The building, including entrances, restrooms, lounge, and backstage areas are all accessible with ramps or flat surfaces. Seating marked with a wheelchair icon is reserved for patrons in wheelchairs or walkers with seats.
+	latitude
+	35.1894
+	longitude
+	-114.054
+	seating\_capacity
+	TBD
+	year\_established
+	2016
+	organization
+	Kingman Center for the Arts
+	nonprofit\_status
+	501(c)(3)
+	historic\_note
+	Originally built as the State Theater in 1948. Purchased by Kingman Center for the Arts in 2018 and renovated as a world-class performing arts venue.
+	awards
+	2025 Project of the Year Award - Small Cities and Rural Communities (APWA, Arizona Chapter)
+	renovation\_partners
+	T.R. Orr Inc. and Angle Homes (general contractors)
+	
+
+Plan your visit
+
+
+Venue Name
+	Distance/Location
+	Type
+	Grand Canyon Brewing + Distillery
+	0.04 km
+	Brewery & Dining
+	Rickety Cricket Brewing
+	0.4 km
+	Brewery & Dining
+	Mr D’z Route 66 Diner
+	0.8 km (10-min walk)
+	Iconic American Diner
