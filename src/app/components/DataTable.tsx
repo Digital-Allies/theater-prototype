@@ -8,8 +8,6 @@ interface CollectionItem {
   date: string;
   time: string;
   description: string;
-  ludusId: string;
-  ludusUrl: string;
   pricing: string;
   venue: string;
   address: string;
@@ -26,7 +24,6 @@ export function DataTable({ data }: DataTableProps) {
     "Category",
     "Date",
     "Time",
-    "Ludus ID",
     "Pricing",
   ];
 
@@ -134,21 +131,6 @@ export function DataTable({ data }: DataTableProps) {
                 }}
               >
                 {item.time}
-              </td>
-              <td className="px-4 py-3">
-                <a
-                  href={item.ludusUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:underline"
-                  style={{
-                    fontFamily: "'Roboto Mono', 'Roboto', monospace",
-                    fontSize: "0.75rem",
-                    color: "#14b8a6",
-                  }}
-                >
-                  {item.ludusId}
-                </a>
               </td>
               <td
                 className="px-4 py-3 text-[#8a8f98]"

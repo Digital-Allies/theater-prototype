@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router";
 import { Menu, X } from "lucide-react";
-import bstLogo from "figma:asset/632f070f62a4def86e86cfd0ee04bfd636adba53.png";
+import { DigitalAlliesLogo } from "./DigitalAlliesLogo";
 
 export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -9,8 +9,7 @@ export function Navbar() {
 
   const navLinks = [
     { label: "Home", path: "/" },
-    { label: "Get Tickets", path: "/get-tickets" },
-    { label: "Youth Theater", path: "/youth-theater" },
+    { label: "Find Your Event", path: "/find-your-event" },
     { label: "Community Theater", path: "/community-theater" },
     { label: "About", path: "/about" },
     { label: "Support", path: "/support" },
@@ -31,11 +30,7 @@ export function Navbar() {
       <div className="max-w-[1400px] mx-auto px-6 py-3 flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-3">
-          <img
-            src={bstLogo}
-            alt="Beale Street Theater"
-            className="h-12 w-auto object-contain"
-          />
+          <DigitalAlliesLogo height={40} />
         </Link>
 
         {/* Desktop Nav */}
@@ -60,7 +55,7 @@ export function Navbar() {
 
         {/* CTA + Mobile Toggle */}
         <div className="flex items-center gap-4">
-          <Link to="/get-tickets">
+          <Link to="/find-your-event">
             <button
               className="hidden sm:block px-5 py-2 uppercase tracking-[0.08em] cursor-pointer hover:opacity-90 transition-opacity"
               style={{
@@ -110,7 +105,7 @@ export function Navbar() {
               {link.label}
             </Link>
           ))}
-          <Link to="/get-tickets" onClick={() => setMobileOpen(false)}>
+          <Link to="/find-your-event" onClick={() => setMobileOpen(false)}>
             <button
               className="w-full py-3 uppercase tracking-[0.08em] cursor-pointer"
               style={{

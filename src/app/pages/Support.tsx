@@ -5,32 +5,32 @@ import { Heart, Users, Wrench, Armchair, Gift, DollarSign } from "lucide-react";
 
 const supportOptions = [
   {
-    title: "Sponsor a Show",
+    title: "Production Partnership",
     icon: <DollarSign size={36} />,
     description:
-      "Become a production sponsor and see your name in lights! Show sponsors receive recognition in our programs, on our website, and during curtain calls.",
-    tiers: ["Bronze: $500", "Silver: $1,000", "Gold: $2,500", "Platinum: $5,000+"],
+      "Partner with us on a mainstage production and receive prominent recognition across our marketing channels, in-house programs, and performance announcements.",
+    tiers: ["Supporter: $500", "Champion: $1,200", "Premier: $3,000", "Executive: $6,000+"],
   },
   {
-    title: "Fund Our Equipment",
+    title: "Technical Innovation Fund",
     icon: <Wrench size={36} />,
     description:
-      "Help us maintain and upgrade our technical equipment. From new lighting instruments to sound systems, your contribution keeps our productions running smoothly.",
-    needs: ["Stage Lighting ($10,000)", "Sound System Upgrade ($8,000)", "Costume Shop Equipment ($3,000)"],
+      "Support the acquisition and maintenance of modern theater technology. Your gift ensures our performers and audiences benefit from cutting-edge production capabilities.",
+    needs: ["LED Stage Systems ($12,000)", "Digital Sound Console ($9,500)", "Rigging & Safety Equipment ($4,200)"],
   },
   {
-    title: "Adopt a Seat",
+    title: "Legacy Seating Program",
     icon: <Armchair size={36} />,
     description:
-      "Leave your legacy at BST by adopting a seat in our theater. Your personalized plaque will grace the seat of your choice, and you'll receive lifetime recognition.",
-    pricing: "$500 per seat - Includes engraved plaque",
+      "Honor a loved one or commemorate a milestone with a permanently named seat. Each legacy seat includes a custom plaque and recognition in perpetuity.",
+    pricing: "$650 per seat - Custom engraving included",
   },
   {
-    title: "Pay-It-Forward Programs",
+    title: "Access & Opportunity Fund",
     icon: <Gift size={36} />,
     description:
-      "Ensure that everyone can experience live theater. Your donation to our Pay-It-Forward fund provides tickets and program scholarships to those who need them most.",
-    impact: "Last year, we provided 200+ free tickets and 15 youth scholarships",
+      "Break down barriers to participation. Your contribution subsidizes tickets for underserved audiences and provides training scholarships for aspiring performers.",
+    impact: "Last season: 250+ subsidized tickets and 20 program scholarships awarded",
   },
 ];
 
@@ -49,7 +49,7 @@ export default function Support() {
                 fontWeight: 700,
               }}
             >
-              Support BST
+              Support the Theater
             </span>
             <h1
               className="text-[#e8e8e8] mb-6"
@@ -73,7 +73,7 @@ export default function Support() {
                 lineHeight: 1.7,
               }}
             >
-              As a nonprofit organization, Beale Street Theater depends on the generosity of patrons like you. Your support ensures we can continue bringing world-class performances to Northern Arizona while providing arts education to our community.
+              As a nonprofit organization, Community Theater depends on the generosity of patrons like you. Your support ensures we can continue bringing world-class performances to local audiences while providing arts education to our community.
             </p>
           </div>
         </div>
@@ -584,7 +584,7 @@ export default function Support() {
                 lineHeight: 1.7,
               }}
             >
-              Your tax-deductible donation directly supports our mission to provide exceptional live theater and arts education. BST is a 501(c)(3) nonprofit organization.
+              Your tax-deductible donation directly supports our mission to provide exceptional live theater and arts education. Community Theater is a 501(c)(3) nonprofit organization.
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <BSTButton variant="primary" size="lg">

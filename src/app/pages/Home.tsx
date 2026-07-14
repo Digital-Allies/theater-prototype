@@ -8,7 +8,7 @@ import { DataTable } from "../components/DataTable";
 import { BarChart } from "../components/BarChart";
 import { EventCalendar } from "../components/EventCalendar";
 import { allEvents, shows } from "../data/shows";
-import bstLogo from "figma:asset/632f070f62a4def86e86cfd0ee04bfd636adba53.png";
+import { DigitalAlliesLogo } from "../components/DigitalAlliesLogo";
 import {
   Theater,
   Users,
@@ -69,13 +69,13 @@ export default function Home() {
                   lineHeight: 1.7,
                 }}
               >
-                Beale Street Theater brings Kingman's boldest stories to life
-                on Route 66. From soul-stirring drama to electrifying live
+                Your community theater brings local stories to life.
+                From soul-stirring drama to electrifying live
                 music, experience performances that move you — in a venue
                 built for intimacy.
               </p>
               <div className="flex flex-wrap gap-4">
-                <Link to="/get-tickets">
+                <Link to="/find-your-event">
                   <BSTButton variant="primary" size="lg">
                     View Season
                   </BSTButton>
@@ -88,11 +88,7 @@ export default function Home() {
               </div>
             </div>
             <div className="lg:col-span-5 hidden lg:flex items-center justify-center">
-              <img
-                src={bstLogo}
-                alt="Beale Street Theater Logo"
-                className="w-full max-w-[400px] h-auto object-contain"
-              />
+              <DigitalAlliesLogo height={80} />
             </div>
           </div>
         </div>
@@ -174,6 +170,196 @@ export default function Home() {
                 imageUrl={show.imageUrl}
               />
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ========== COMMUNITY THEATER CTA ========== */}
+      <section className="py-16">
+        <div className="max-w-[1400px] mx-auto px-6">
+          <div
+            className="p-12"
+            style={{
+              backgroundColor: "#111315",
+              borderRadius: "0px 10px 10px 0px",
+              borderTop: "2px solid #14b8a6",
+              borderRight: "2px solid #14b8a6",
+              borderBottom: "2px solid #14b8a6",
+              borderLeft: "none",
+              boxShadow: "12px 0 20px -8px rgba(20, 184, 166, 0.4)",
+            }}
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <span
+                  className="inline-block text-[#14b8a6] uppercase tracking-[0.15em] mb-4"
+                  style={{
+                    fontFamily: "'League Spartan', sans-serif",
+                    fontSize: "0.7rem",
+                    fontWeight: 700,
+                  }}
+                >
+                  Join the Community
+                </span>
+                <h2
+                  className="text-[#e8e8e8] mb-6"
+                  style={{
+                    fontFamily: "'League Spartan', sans-serif",
+                    fontSize: "clamp(1.75rem, 4vw, 2.5rem)",
+                    fontWeight: 700,
+                    letterSpacing: "0.08em",
+                    lineHeight: 1.2,
+                  }}
+                >
+                  BE PART OF THE SHOW
+                </h2>
+                <p
+                  className="text-[#8a8f98] mb-6"
+                  style={{
+                    fontFamily: "'Roboto', sans-serif",
+                    fontSize: "1rem",
+                    lineHeight: 1.7,
+                  }}
+                >
+                  Our Community Theater Program welcomes performers of all ages and skill levels. Whether you're interested in auditioning for a mainstage production, taking classes, or enrolling young artists in our youth program — there's a place for you on our stage.
+                </p>
+                <Link to="/community-theater">
+                  <BSTButton variant="primary" size="lg">
+                    Explore Community Theater
+                  </BSTButton>
+                </Link>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div
+                  className="p-5"
+                  style={{
+                    backgroundColor: "#0d0f11",
+                    borderRadius: "0px 10px 10px 0px",
+                    borderTop: "1px solid #14b8a633",
+                    borderRight: "1px solid #14b8a633",
+                    borderBottom: "1px solid #14b8a633",
+                    borderLeft: "none",
+                  }}
+                >
+                  <span
+                    className="block text-[#14b8a6] uppercase tracking-[0.1em] mb-2"
+                    style={{
+                      fontFamily: "'League Spartan', sans-serif",
+                      fontSize: "0.8rem",
+                      fontWeight: 700,
+                    }}
+                  >
+                    Auditions
+                  </span>
+                  <p
+                    className="text-[#8a8f98]"
+                    style={{
+                      fontFamily: "'Roboto', sans-serif",
+                      fontSize: "0.85rem",
+                      lineHeight: 1.6,
+                    }}
+                  >
+                    All skill levels welcome
+                  </p>
+                </div>
+                <div
+                  className="p-5"
+                  style={{
+                    backgroundColor: "#0d0f11",
+                    borderRadius: "0px 10px 10px 0px",
+                    borderTop: "1px solid #14b8a633",
+                    borderRight: "1px solid #14b8a633",
+                    borderBottom: "1px solid #14b8a633",
+                    borderLeft: "none",
+                  }}
+                >
+                  <span
+                    className="block text-[#14b8a6] uppercase tracking-[0.1em] mb-2"
+                    style={{
+                      fontFamily: "'League Spartan', sans-serif",
+                      fontSize: "0.8rem",
+                      fontWeight: 700,
+                    }}
+                  >
+                    Classes
+                  </span>
+                  <p
+                    className="text-[#8a8f98]"
+                    style={{
+                      fontFamily: "'Roboto', sans-serif",
+                      fontSize: "0.85rem",
+                      lineHeight: 1.6,
+                    }}
+                  >
+                    Year-round training
+                  </p>
+                </div>
+                <div
+                  className="p-5"
+                  style={{
+                    backgroundColor: "#0d0f11",
+                    borderRadius: "0px 10px 10px 0px",
+                    borderTop: "1px solid #14b8a633",
+                    borderRight: "1px solid #14b8a633",
+                    borderBottom: "1px solid #14b8a633",
+                    borderLeft: "none",
+                  }}
+                >
+                  <span
+                    className="block text-[#14b8a6] uppercase tracking-[0.1em] mb-2"
+                    style={{
+                      fontFamily: "'League Spartan', sans-serif",
+                      fontSize: "0.8rem",
+                      fontWeight: 700,
+                    }}
+                  >
+                    Youth Programs
+                  </span>
+                  <p
+                    className="text-[#8a8f98]"
+                    style={{
+                      fontFamily: "'Roboto', sans-serif",
+                      fontSize: "0.85rem",
+                      lineHeight: 1.6,
+                    }}
+                  >
+                    Ages 8-18
+                  </p>
+                </div>
+                <div
+                  className="p-5"
+                  style={{
+                    backgroundColor: "#0d0f11",
+                    borderRadius: "0px 10px 10px 0px",
+                    borderTop: "1px solid #14b8a633",
+                    borderRight: "1px solid #14b8a633",
+                    borderBottom: "1px solid #14b8a633",
+                    borderLeft: "none",
+                  }}
+                >
+                  <span
+                    className="block text-[#14b8a6] uppercase tracking-[0.1em] mb-2"
+                    style={{
+                      fontFamily: "'League Spartan', sans-serif",
+                      fontSize: "0.8rem",
+                      fontWeight: 700,
+                    }}
+                  >
+                    Workshops
+                  </span>
+                  <p
+                    className="text-[#8a8f98]"
+                    style={{
+                      fontFamily: "'Roboto', sans-serif",
+                      fontSize: "0.85rem",
+                      lineHeight: 1.6,
+                    }}
+                  >
+                    Specialized techniques
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

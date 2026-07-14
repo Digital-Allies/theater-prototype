@@ -6,7 +6,7 @@ import { EventCalendar } from "../components/EventCalendar";
 import { allEvents, shows } from "../data/shows";
 import { Calendar, Ticket, MapPin } from "lucide-react";
 
-export default function GetTickets() {
+export default function FindYourEvent() {
   return (
     <div className="min-h-screen w-full" style={{ backgroundColor: "#111315" }}>
       {/* ========== HERO ========== */}
@@ -21,7 +21,7 @@ export default function GetTickets() {
                 fontWeight: 700,
               }}
             >
-              Get Tickets
+              Find Your Event
             </span>
             <h1
               className="text-[#e8e8e8] mb-6"
@@ -43,7 +43,7 @@ export default function GetTickets() {
                 lineHeight: 1.7,
               }}
             >
-              Browse our full 2026 season lineup and reserve your seats for unforgettable performances. All tickets are managed through our Ludus ticketing system for secure, easy purchasing.
+              Browse our full 2026 season lineup and reserve your seats for unforgettable performances. Tickets are available online or at the box office for secure, easy purchasing.
             </p>
           </div>
         </div>
@@ -89,7 +89,7 @@ export default function GetTickets() {
                   lineHeight: 1.6,
                 }}
               >
-                All tickets are sold through Ludus, our trusted ticketing partner. Select your show and complete your purchase in just a few clicks.
+                Tickets are available online or at the box office. Select your show and complete your purchase in just a few clicks.
               </p>
             </div>
 

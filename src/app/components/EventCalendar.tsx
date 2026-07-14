@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from "react";
-import { ChevronLeft, ChevronRight, X, Clock, MapPin, Ticket, ExternalLink } from "lucide-react";
+import { ChevronLeft, ChevronRight, X, Clock, MapPin, Ticket } from "lucide-react";
 
 export interface CalendarEvent {
   id: string;
@@ -8,7 +8,6 @@ export interface CalendarEvent {
   time: string;
   category: string;
   description: string;
-  ludusUrl: string;
   pricing: string;
   venue: string;
   address: string;
@@ -21,7 +20,8 @@ interface EventCalendarProps {
 const CATEGORY_COLORS: Record<string, string> = {
   "Community Theater": "#14b8a6",
   "Special Event": "#f59e0b",
-  "Concert Series": "#8b5cf6",
+  "Indie Film": "#8b5cf6",
+  "Conference": "#60a5fa",
   "Youth Theater": "#ec4899",
   Music: "#3b82f6",
   Drama: "#ef4444",
@@ -616,11 +616,8 @@ export function EventCalendar({ events }: EventCalendarProps) {
               </p>
 
               <div className="flex gap-3">
-                <a
-                  href={selectedEvent.ludusUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 flex items-center justify-center gap-2 py-3 uppercase tracking-[0.08em] hover:opacity-90 transition-opacity"
+                <button
+                  className="flex-1 flex items-center justify-center gap-2 py-3 uppercase tracking-[0.08em] hover:opacity-90 transition-opacity cursor-pointer"
                   style={{
                     backgroundColor: "#14b8a6",
                     color: "#111315",
@@ -628,26 +625,12 @@ export function EventCalendar({ events }: EventCalendarProps) {
                     fontWeight: 700,
                     fontSize: "0.8rem",
                     borderRadius: "0px 10px 10px 0px",
-                    textDecoration: "none",
+                    border: "none",
                   }}
                 >
                   <Ticket size={16} />
                   Get Tickets
-                </a>
-                <a
-                  href={selectedEvent.ludusUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center w-12 hover:bg-[#2a3038] transition-colors"
-                  style={{
-                    backgroundColor: "#1b1f22",
-                    border: "1px solid #14b8a633",
-                    borderRadius: "0px 10px 10px 0px",
-                    color: "#14b8a6",
-                  }}
-                >
-                  <ExternalLink size={16} />
-                </a>
+                </button>
               </div>
             </div>
           </div>

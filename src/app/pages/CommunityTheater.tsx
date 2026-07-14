@@ -3,10 +3,11 @@ import { SectionHeader } from "../components/SectionHeader";
 import { ShowCard } from "../components/ShowCard";
 import { BSTButton } from "../components/BSTButton";
 import { allEvents } from "../data/shows";
-import { Theater, Mic, Palette, Users } from "lucide-react";
+import { Theater, Mic, Palette, Users, Sparkles, Calendar, Star } from "lucide-react";
 
 export default function CommunityTheater() {
   const communityShows = allEvents.filter((event) => event.category === "Community Theater");
+  const youthShows = allEvents.filter((event) => event.category === "Youth Theater");
 
   return (
     <div className="min-h-screen w-full" style={{ backgroundColor: "#111315" }}>
@@ -46,7 +47,7 @@ export default function CommunityTheater() {
                 lineHeight: 1.7,
               }}
             >
-              BST's Community Theater Program welcomes performers of all skill levels to participate in mainstage productions. From auditions to workshops, discover your place in our vibrant theater community.
+              Our Community Theater Program welcomes performers of all ages and skill levels to participate in mainstage productions. From auditions to workshops, discover your place in our vibrant theater community — whether you're just starting out or bringing years of experience.
             </p>
           </div>
         </div>
@@ -594,6 +595,302 @@ export default function CommunityTheater() {
 
               <BSTButton variant="primary" size="lg">
                 Register for Classes
+              </BSTButton>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========== YOUTH THEATER SECTION ========== */}
+      <section className="py-16" style={{ backgroundColor: "#0d0f11" }}>
+        <div className="max-w-[1400px] mx-auto px-6">
+          <div className="max-w-3xl mb-16">
+            <span
+              className="inline-block text-[#14b8a6] uppercase tracking-[0.15em] mb-4"
+              style={{
+                fontFamily: "'League Spartan', sans-serif",
+                fontSize: "0.7rem",
+                fontWeight: 700,
+              }}
+            >
+              Youth Programming
+            </span>
+            <h2
+              className="text-[#e8e8e8] mb-6"
+              style={{
+                fontFamily: "'League Spartan', sans-serif",
+                fontSize: "clamp(1.75rem, 4vw, 2.75rem)",
+                fontWeight: 700,
+                letterSpacing: "0.08em",
+                lineHeight: 1.1,
+              }}
+            >
+              WHERE YOUNG ARTISTS SHINE BRIGHT
+            </h2>
+            <p
+              className="text-[#8a8f98] max-w-[520px]"
+              style={{
+                fontFamily: "'Roboto', sans-serif",
+                fontSize: "1rem",
+                lineHeight: 1.7,
+              }}
+            >
+              Our Youth Theater Program provides professional training and performance opportunities for young artists ages 8-18. From workshops to full productions, we nurture the next generation of theater makers.
+            </p>
+          </div>
+
+          <SectionHeader title="Youth Program Benefits" subtitle="What We Offer" />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            <div
+              className="p-6"
+              style={{
+                backgroundColor: "#111315",
+                borderRadius: "0px 10px 10px 0px",
+                borderTop: "2px solid #14b8a6",
+                borderRight: "2px solid #14b8a6",
+                borderBottom: "2px solid #14b8a6",
+                borderLeft: "none",
+                boxShadow: "12px 0 20px -8px rgba(20, 184, 166, 0.4)",
+              }}
+            >
+              <div className="text-[#14b8a6] mb-4">
+                <Sparkles size={32} />
+              </div>
+              <span
+                className="block text-[#e8e8e8] uppercase mb-3"
+                style={{
+                  fontFamily: "'League Spartan', sans-serif",
+                  fontSize: "1rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.06em",
+                }}
+              >
+                Professional Training
+              </span>
+              <p
+                className="text-[#8a8f98]"
+                style={{
+                  fontFamily: "'Roboto', sans-serif",
+                  fontSize: "0.9rem",
+                  lineHeight: 1.6,
+                }}
+              >
+                Learn from experienced theater professionals in acting, voice, movement, and stagecraft.
+              </p>
+            </div>
+
+            <div
+              className="p-6"
+              style={{
+                backgroundColor: "#111315",
+                borderRadius: "0px 10px 10px 0px",
+                borderTop: "2px solid #14b8a6",
+                borderRight: "2px solid #14b8a6",
+                borderBottom: "2px solid #14b8a6",
+                borderLeft: "none",
+                boxShadow: "12px 0 20px -8px rgba(20, 184, 166, 0.4)",
+              }}
+            >
+              <div className="text-[#14b8a6] mb-4">
+                <Star size={32} />
+              </div>
+              <span
+                className="block text-[#e8e8e8] uppercase mb-3"
+                style={{
+                  fontFamily: "'League Spartan', sans-serif",
+                  fontSize: "1rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.06em",
+                }}
+              >
+                Performance Opportunities
+              </span>
+              <p
+                className="text-[#8a8f98]"
+                style={{
+                  fontFamily: "'Roboto', sans-serif",
+                  fontSize: "0.9rem",
+                  lineHeight: 1.6,
+                }}
+              >
+                Perform on our mainstage in full productions with costumes, sets, and lighting.
+              </p>
+            </div>
+
+            <div
+              className="p-6"
+              style={{
+                backgroundColor: "#111315",
+                borderRadius: "0px 10px 10px 0px",
+                borderTop: "2px solid #14b8a6",
+                borderRight: "2px solid #14b8a6",
+                borderBottom: "2px solid #14b8a6",
+                borderLeft: "none",
+                boxShadow: "12px 0 20px -8px rgba(20, 184, 166, 0.4)",
+              }}
+            >
+              <div className="text-[#14b8a6] mb-4">
+                <Users size={32} />
+              </div>
+              <span
+                className="block text-[#e8e8e8] uppercase mb-3"
+                style={{
+                  fontFamily: "'League Spartan', sans-serif",
+                  fontSize: "1rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.06em",
+                }}
+              >
+                Community Building
+              </span>
+              <p
+                className="text-[#8a8f98]"
+                style={{
+                  fontFamily: "'Roboto', sans-serif",
+                  fontSize: "0.9rem",
+                  lineHeight: 1.6,
+                }}
+              >
+                Join a supportive community of young artists building lifelong friendships.
+              </p>
+            </div>
+
+            <div
+              className="p-6"
+              style={{
+                backgroundColor: "#111315",
+                borderRadius: "0px 10px 10px 0px",
+                borderTop: "2px solid #14b8a6",
+                borderRight: "2px solid #14b8a6",
+                borderBottom: "2px solid #14b8a6",
+                borderLeft: "none",
+                boxShadow: "12px 0 20px -8px rgba(20, 184, 166, 0.4)",
+              }}
+            >
+              <div className="text-[#14b8a6] mb-4">
+                <Calendar size={32} />
+              </div>
+              <span
+                className="block text-[#e8e8e8] uppercase mb-3"
+                style={{
+                  fontFamily: "'League Spartan', sans-serif",
+                  fontSize: "1rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.06em",
+                }}
+              >
+                Year-Round Programs
+              </span>
+              <p
+                className="text-[#8a8f98]"
+                style={{
+                  fontFamily: "'Roboto', sans-serif",
+                  fontSize: "0.9rem",
+                  lineHeight: 1.6,
+                }}
+              >
+                Ongoing classes, summer intensives, and seasonal productions throughout the year.
+              </p>
+            </div>
+          </div>
+
+          {/* Youth Productions */}
+          <SectionHeader title="Youth Productions" subtitle="Upcoming Shows" />
+
+          {youthShows.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+              {youthShows.map((show) => (
+                <ShowCard
+                  key={show.id}
+                  title={show.title}
+                  date={`${new Date(show.date).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                  })} - ${show.time}`}
+                  category={show.category}
+                  imageUrl="https://images.unsplash.com/photo-1503095396549-807759245b35?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080"
+                />
+              ))}
+            </div>
+          ) : (
+            <div
+              className="p-12 text-center mb-16"
+              style={{
+                backgroundColor: "#111315",
+                borderRadius: "0px 10px 10px 0px",
+                borderTop: "2px solid #14b8a6",
+                borderRight: "2px solid #14b8a6",
+                borderBottom: "2px solid #14b8a6",
+                borderLeft: "none",
+                boxShadow: "12px 0 20px -8px rgba(20, 184, 166, 0.4)",
+              }}
+            >
+              <p
+                className="text-[#8a8f98]"
+                style={{
+                  fontFamily: "'Roboto', sans-serif",
+                  fontSize: "1rem",
+                  lineHeight: 1.7,
+                }}
+              >
+                Youth productions coming soon! Check back for upcoming shows.
+              </p>
+            </div>
+          )}
+
+          {/* Youth Registration CTA */}
+          <div
+            className="p-12 text-center"
+            style={{
+              backgroundColor: "#111315",
+              borderRadius: "0px 10px 10px 0px",
+              borderTop: "2px solid #14b8a6",
+              borderRight: "2px solid #14b8a6",
+              borderBottom: "2px solid #14b8a6",
+              borderLeft: "none",
+              boxShadow: "12px 0 20px -8px rgba(20, 184, 166, 0.4)",
+            }}
+          >
+            <span
+              className="inline-block text-[#14b8a6] uppercase tracking-[0.15em] mb-4"
+              style={{
+                fontFamily: "'League Spartan', sans-serif",
+                fontSize: "0.7rem",
+                fontWeight: 700,
+              }}
+            >
+              Get Started Today
+            </span>
+            <h2
+              className="text-[#e8e8e8] mb-6"
+              style={{
+                fontFamily: "'League Spartan', sans-serif",
+                fontSize: "2rem",
+                fontWeight: 700,
+                letterSpacing: "0.08em",
+                lineHeight: 1.2,
+              }}
+            >
+              REGISTER FOR YOUTH PROGRAMS
+            </h2>
+            <p
+              className="text-[#8a8f98] max-w-2xl mx-auto mb-8"
+              style={{
+                fontFamily: "'Roboto', sans-serif",
+                fontSize: "1rem",
+                lineHeight: 1.7,
+              }}
+            >
+              Enroll your young artist in classes, workshops, or audition for upcoming productions. Scholarships available based on need.
+            </p>
+            <div className="flex flex-wrap gap-4 justify-center">
+              <BSTButton variant="primary" size="lg">
+                Register Now
+              </BSTButton>
+              <BSTButton variant="secondary" size="lg">
+                Learn About Scholarships
               </BSTButton>
             </div>
           </div>

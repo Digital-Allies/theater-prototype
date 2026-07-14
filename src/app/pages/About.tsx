@@ -1,14 +1,14 @@
 import React from "react";
 import { SectionHeader } from "../components/SectionHeader";
 import { BSTButton } from "../components/BSTButton";
-import bstLogo from "figma:asset/632f070f62a4def86e86cfd0ee04bfd636adba53.png";
+import { DigitalAlliesLogo } from "../components/DigitalAlliesLogo";
 import { Users, Heart, Award, Building } from "lucide-react";
 
 const staffMembers = [
   {
     name: "Jennifer Morrison",
     title: "Executive Director",
-    bio: "Leading BST's artistic vision since 2016, Jennifer brings 20 years of professional theater experience.",
+    bio: "Leading the theater's artistic vision since founding, Jennifer brings 20 years of professional theater experience.",
   },
   {
     name: "Michael Chen",
@@ -55,7 +55,7 @@ export default function About() {
                   lineHeight: 1.1,
                 }}
               >
-                BEALE STREET THEATER
+                COMMUNITY THEATER
               </h1>
               <p
                 className="text-[#8a8f98] max-w-[520px] mb-8"
@@ -65,15 +65,11 @@ export default function About() {
                   lineHeight: 1.7,
                 }}
               >
-                For over a decade, Beale Street Theater has been Kingman's premier destination for live performance. Located on historic Route 66, we are committed to bringing world-class entertainment to Northern Arizona while fostering a vibrant arts community.
+                For over a decade, this theater has been the community's premier destination for live performance. We are committed to bringing world-class entertainment to local audiences while fostering a vibrant arts community.
               </p>
             </div>
             <div className="lg:col-span-5 flex items-center justify-center">
-              <img
-                src={bstLogo}
-                alt="Beale Street Theater Logo"
-                className="w-full max-w-[360px] h-auto object-contain"
-              />
+              <DigitalAlliesLogo height={72} />
             </div>
           </div>
         </div>
@@ -119,7 +115,7 @@ export default function About() {
                   lineHeight: 1.6,
                 }}
               >
-                We create opportunities for local artists and provide accessible arts education to youth throughout Mohave County.
+                We create opportunities for local artists and provide accessible arts education to youth throughout our region.
               </p>
             </div>
 
@@ -233,7 +229,7 @@ export default function About() {
                   lineHeight: 1.6,
                 }}
               >
-                Our historic venue on Route 66 honors Kingman's heritage while serving as a cultural anchor for future generations.
+                Our historic venue honors local heritage while serving as a cultural anchor for future generations.
               </p>
             </div>
           </div>
@@ -322,7 +318,7 @@ export default function About() {
                 lineHeight: 1.8,
               }}
             >
-              Founded in 2016, Beale Street Theater emerged from a simple vision: to create a professional theater company that would serve as the cultural heartbeat of Kingman and Northern Arizona. What began in a converted storefront on historic Route 66 has grown into a thriving arts organization presenting over 30 productions annually.
+              Founded over a decade ago, this community theater emerged from a simple vision: to create a professional theater company that would serve as the cultural heartbeat of our region. What began as a small company has grown into a thriving arts organization presenting over 30 productions annually.
             </p>
             <p
               className="text-[#8a8f98] mb-6"
@@ -332,7 +328,7 @@ export default function About() {
                 lineHeight: 1.8,
               }}
             >
-              Our commitment to artistic excellence, community engagement, and youth education has made BST a cornerstone of Mohave County's cultural landscape. Through mainstage productions, youth theater programs, and educational outreach, we've touched the lives of thousands of artists and audience members.
+              Our commitment to artistic excellence, community engagement, and youth education has made this theater a cornerstone of the local cultural landscape. Through mainstage productions, youth theater programs, and educational outreach, we've touched the lives of thousands of artists and audience members.
             </p>
             <p
               className="text-[#8a8f98]"
@@ -383,7 +379,7 @@ export default function About() {
                 lineHeight: 1.2,
               }}
             >
-              BECOME A PART OF BST
+              BECOME A PART OF OUR STORY
             </h2>
             <p
               className="text-[#8a8f98] max-w-2xl mx-auto mb-8"
@@ -393,14 +389,14 @@ export default function About() {
                 lineHeight: 1.7,
               }}
             >
-              Whether you want to volunteer, audition, or support our mission, there are many ways to get involved with Beale Street Theater.
+              Whether you want to volunteer, audition, or support our mission, there are many ways to get involved with Community Theater.
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <BSTButton variant="primary" size="lg">
                 Volunteer
               </BSTButton>
               <BSTButton variant="secondary" size="lg">
-                Support BST
+                Support the Theater
               </BSTButton>
             </div>
           </div>
